@@ -40,6 +40,8 @@
             this.description_tab = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.quote_tab = new System.Windows.Forms.TabPage();
+            this.total_profit_label = new System.Windows.Forms.Label();
+            this.total_sale_label = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.item_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sku_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -61,8 +63,8 @@
             this.provider_textBox = new System.Windows.Forms.TextBox();
             this.sku_textBox = new System.Windows.Forms.TextBox();
             this.item_textBox = new System.Windows.Forms.TextBox();
-            this.total_sale_label = new System.Windows.Forms.Label();
-            this.total_profit_label = new System.Windows.Forms.Label();
+            this.total_label = new System.Windows.Forms.Label();
+            this.percent_label = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.description_tab.SuspendLayout();
             this.quote_tab.SuspendLayout();
@@ -142,7 +144,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 102);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1066, 444);
+            this.tabControl1.Size = new System.Drawing.Size(1066, 456);
             this.tabControl1.TabIndex = 8;
             // 
             // description_tab
@@ -151,7 +153,7 @@
             this.description_tab.Location = new System.Drawing.Point(4, 22);
             this.description_tab.Name = "description_tab";
             this.description_tab.Padding = new System.Windows.Forms.Padding(3);
-            this.description_tab.Size = new System.Drawing.Size(1048, 374);
+            this.description_tab.Size = new System.Drawing.Size(1058, 430);
             this.description_tab.TabIndex = 0;
             this.description_tab.Text = "Description";
             this.description_tab.UseVisualStyleBackColor = true;
@@ -167,6 +169,8 @@
             // 
             // quote_tab
             // 
+            this.quote_tab.Controls.Add(this.percent_label);
+            this.quote_tab.Controls.Add(this.total_label);
             this.quote_tab.Controls.Add(this.total_profit_label);
             this.quote_tab.Controls.Add(this.total_sale_label);
             this.quote_tab.Controls.Add(this.dataGridView1);
@@ -186,10 +190,30 @@
             this.quote_tab.Location = new System.Drawing.Point(4, 22);
             this.quote_tab.Name = "quote_tab";
             this.quote_tab.Padding = new System.Windows.Forms.Padding(3);
-            this.quote_tab.Size = new System.Drawing.Size(1058, 418);
+            this.quote_tab.Size = new System.Drawing.Size(1058, 430);
             this.quote_tab.TabIndex = 1;
             this.quote_tab.Text = "Quote";
             this.quote_tab.UseVisualStyleBackColor = true;
+            // 
+            // total_profit_label
+            // 
+            this.total_profit_label.AutoSize = true;
+            this.total_profit_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.total_profit_label.Location = new System.Drawing.Point(698, 407);
+            this.total_profit_label.Name = "total_profit_label";
+            this.total_profit_label.Size = new System.Drawing.Size(81, 20);
+            this.total_profit_label.TabIndex = 16;
+            this.total_profit_label.Text = "TotalProfit";
+            // 
+            // total_sale_label
+            // 
+            this.total_sale_label.AutoSize = true;
+            this.total_sale_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.total_sale_label.Location = new System.Drawing.Point(698, 367);
+            this.total_sale_label.Name = "total_sale_label";
+            this.total_sale_label.Size = new System.Drawing.Size(80, 20);
+            this.total_sale_label.TabIndex = 9;
+            this.total_sale_label.Text = "TotalCOG";
             // 
             // dataGridView1
             // 
@@ -257,7 +281,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(847, 18);
+            this.label10.Location = new System.Drawing.Point(858, 18);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(60, 13);
             this.label10.TabIndex = 11;
@@ -265,7 +289,7 @@
             // 
             // sog_textBox
             // 
-            this.sog_textBox.Location = new System.Drawing.Point(847, 34);
+            this.sog_textBox.Location = new System.Drawing.Point(858, 34);
             this.sog_textBox.Name = "sog_textBox";
             this.sog_textBox.Size = new System.Drawing.Size(78, 20);
             this.sog_textBox.TabIndex = 10;
@@ -273,7 +297,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(700, 18);
+            this.label9.Location = new System.Drawing.Point(753, 18);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(60, 13);
             this.label9.TabIndex = 9;
@@ -282,7 +306,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(604, 18);
+            this.label8.Location = new System.Drawing.Point(648, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(23, 13);
             this.label8.TabIndex = 8;
@@ -291,7 +315,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(511, 15);
+            this.label7.Location = new System.Drawing.Point(555, 15);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(46, 13);
             this.label7.TabIndex = 7;
@@ -300,7 +324,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(295, 18);
+            this.label6.Location = new System.Drawing.Point(340, 18);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(29, 13);
             this.label6.TabIndex = 6;
@@ -317,28 +341,28 @@
             // 
             // cog_textBox
             // 
-            this.cog_textBox.Location = new System.Drawing.Point(703, 34);
+            this.cog_textBox.Location = new System.Drawing.Point(756, 34);
             this.cog_textBox.Name = "cog_textBox";
             this.cog_textBox.Size = new System.Drawing.Size(78, 20);
             this.cog_textBox.TabIndex = 4;
             // 
             // qty_textBox
             // 
-            this.qty_textBox.Location = new System.Drawing.Point(607, 34);
+            this.qty_textBox.Location = new System.Drawing.Point(651, 34);
             this.qty_textBox.Name = "qty_textBox";
             this.qty_textBox.Size = new System.Drawing.Size(79, 20);
             this.qty_textBox.TabIndex = 3;
             // 
             // provider_textBox
             // 
-            this.provider_textBox.Location = new System.Drawing.Point(514, 34);
+            this.provider_textBox.Location = new System.Drawing.Point(558, 34);
             this.provider_textBox.Name = "provider_textBox";
             this.provider_textBox.Size = new System.Drawing.Size(87, 20);
             this.provider_textBox.TabIndex = 2;
             // 
             // sku_textBox
             // 
-            this.sku_textBox.Location = new System.Drawing.Point(298, 34);
+            this.sku_textBox.Location = new System.Drawing.Point(343, 34);
             this.sku_textBox.Name = "sku_textBox";
             this.sku_textBox.Size = new System.Drawing.Size(190, 20);
             this.sku_textBox.TabIndex = 1;
@@ -347,28 +371,28 @@
             // 
             this.item_textBox.Location = new System.Drawing.Point(49, 34);
             this.item_textBox.Name = "item_textBox";
-            this.item_textBox.Size = new System.Drawing.Size(230, 20);
+            this.item_textBox.Size = new System.Drawing.Size(268, 20);
             this.item_textBox.TabIndex = 0;
             // 
-            // total_sale_label
+            // total_label
             // 
-            this.total_sale_label.AutoSize = true;
-            this.total_sale_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.total_sale_label.Location = new System.Drawing.Point(800, 367);
-            this.total_sale_label.Name = "total_sale_label";
-            this.total_sale_label.Size = new System.Drawing.Size(80, 20);
-            this.total_sale_label.TabIndex = 9;
-            this.total_sale_label.Text = "TotalCOG";
+            this.total_label.AutoSize = true;
+            this.total_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.total_label.Location = new System.Drawing.Point(854, 367);
+            this.total_label.Name = "total_label";
+            this.total_label.Size = new System.Drawing.Size(44, 20);
+            this.total_label.TabIndex = 17;
+            this.total_label.Text = "Total";
             // 
-            // total_profit_label
+            // percent_label
             // 
-            this.total_profit_label.AutoSize = true;
-            this.total_profit_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.total_profit_label.Location = new System.Drawing.Point(910, 367);
-            this.total_profit_label.Name = "total_profit_label";
-            this.total_profit_label.Size = new System.Drawing.Size(81, 20);
-            this.total_profit_label.TabIndex = 16;
-            this.total_profit_label.Text = "TotalProfit";
+            this.percent_label.AutoSize = true;
+            this.percent_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.percent_label.Location = new System.Drawing.Point(854, 407);
+            this.percent_label.Name = "percent_label";
+            this.percent_label.Size = new System.Drawing.Size(60, 20);
+            this.percent_label.TabIndex = 18;
+            this.percent_label.Text = "label11";
             // 
             // NewActivity
             // 
@@ -434,5 +458,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn total_col;
         private System.Windows.Forms.Label total_profit_label;
         private System.Windows.Forms.Label total_sale_label;
+        private System.Windows.Forms.Label total_label;
+        private System.Windows.Forms.Label percent_label;
     }
 }

@@ -19,12 +19,11 @@ namespace Quote_Tracker
         }
         SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland");
         double sumProfit = 0;
-        double sumSaleTotal = 0;
-        double cogTotal = 0;
-        double sogTotal = 0;
-        int qty_mult = 0;
         double cogItem = 0;
-        double sogItem = 0;
+        double totalProf = 0;
+        int i = 0;
+        double percentAve = 0;
+
 
         private void Client_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -98,17 +97,27 @@ namespace Quote_Tracker
             cog_textBox.Clear();
             sog_textBox.Clear();
 
+    
+            //multiply qty  by cog and add the result to cogItem
+            cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[3].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
+            total_sale_label.Text ="Total CoG: $"+ cogItem.ToString();
+     
+            //adds the row total to sumprofit
+            sumProfit += Convert.ToDouble(dataGridView1.Rows[i].Cells[6].Value);
+            total_label.Text = "Total: $" + sumProfit.ToString();
+     
+            //subtract to obtain the total earnings
+            totalProf = sumProfit - cogItem;
+            total_profit_label.Text = "Total Profit: $" + totalProf.ToString();
+
+            //calculate average markup for quote
+            percentAve = ((totalProf/cogItem)*100);
+            percent_label.Text = "MarkUp Average: " + Math.Round(percentAve, 2).ToString() +"%";
 
 
-            
-            /*
-            for (int i = 0; i < dataGridView1.Rows.Count; ++i)
-            {
 
-                sumProfit += Convert.ToInt32(dataGridView1.Rows[i].Cells[1].Value);
-            }
-            label1.Text = sumProfit.ToString();
-            */
+            i++;
+
         }
     }
 }

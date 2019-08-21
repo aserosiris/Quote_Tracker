@@ -40,6 +40,8 @@
             this.description_tab = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.quote_tab = new System.Windows.Forms.TabPage();
+            this.percent_label = new System.Windows.Forms.Label();
+            this.total_label = new System.Windows.Forms.Label();
             this.total_profit_label = new System.Windows.Forms.Label();
             this.total_sale_label = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -63,8 +65,6 @@
             this.provider_textBox = new System.Windows.Forms.TextBox();
             this.sku_textBox = new System.Windows.Forms.TextBox();
             this.item_textBox = new System.Windows.Forms.TextBox();
-            this.total_label = new System.Windows.Forms.Label();
-            this.percent_label = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.description_tab.SuspendLayout();
             this.quote_tab.SuspendLayout();
@@ -195,6 +195,26 @@
             this.quote_tab.Text = "Quote";
             this.quote_tab.UseVisualStyleBackColor = true;
             // 
+            // percent_label
+            // 
+            this.percent_label.AutoSize = true;
+            this.percent_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.percent_label.Location = new System.Drawing.Point(854, 407);
+            this.percent_label.Name = "percent_label";
+            this.percent_label.Size = new System.Drawing.Size(23, 20);
+            this.percent_label.TabIndex = 18;
+            this.percent_label.Text = "%";
+            // 
+            // total_label
+            // 
+            this.total_label.AutoSize = true;
+            this.total_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.total_label.Location = new System.Drawing.Point(854, 367);
+            this.total_label.Name = "total_label";
+            this.total_label.Size = new System.Drawing.Size(44, 20);
+            this.total_label.TabIndex = 17;
+            this.total_label.Text = "Total";
+            // 
             // total_profit_label
             // 
             this.total_profit_label.AutoSize = true;
@@ -293,6 +313,7 @@
             this.sog_textBox.Name = "sog_textBox";
             this.sog_textBox.Size = new System.Drawing.Size(78, 20);
             this.sog_textBox.TabIndex = 10;
+            this.sog_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Sog_textBox_KeyPress);
             // 
             // label9
             // 
@@ -345,6 +366,7 @@
             this.cog_textBox.Name = "cog_textBox";
             this.cog_textBox.Size = new System.Drawing.Size(78, 20);
             this.cog_textBox.TabIndex = 4;
+            this.cog_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Cog_textBox_KeyPress);
             // 
             // qty_textBox
             // 
@@ -352,6 +374,8 @@
             this.qty_textBox.Name = "qty_textBox";
             this.qty_textBox.Size = new System.Drawing.Size(79, 20);
             this.qty_textBox.TabIndex = 3;
+            this.qty_textBox.TextChanged += new System.EventHandler(this.Qty_textBox_TextChanged);
+            this.qty_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Qty_textBox_KeyPress);
             // 
             // provider_textBox
             // 
@@ -374,31 +398,11 @@
             this.item_textBox.Size = new System.Drawing.Size(268, 20);
             this.item_textBox.TabIndex = 0;
             // 
-            // total_label
-            // 
-            this.total_label.AutoSize = true;
-            this.total_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.total_label.Location = new System.Drawing.Point(854, 367);
-            this.total_label.Name = "total_label";
-            this.total_label.Size = new System.Drawing.Size(44, 20);
-            this.total_label.TabIndex = 17;
-            this.total_label.Text = "Total";
-            // 
-            // percent_label
-            // 
-            this.percent_label.AutoSize = true;
-            this.percent_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.percent_label.Location = new System.Drawing.Point(854, 407);
-            this.percent_label.Name = "percent_label";
-            this.percent_label.Size = new System.Drawing.Size(60, 20);
-            this.percent_label.TabIndex = 18;
-            this.percent_label.Text = "label11";
-            // 
             // NewActivity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1117, 615);
+            this.ClientSize = new System.Drawing.Size(1118, 718);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.client_comboBox);

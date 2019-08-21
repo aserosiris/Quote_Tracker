@@ -15,6 +15,8 @@ namespace Quote_Tracker
     {
         SqlDataReader reader;
         public static string user_name;
+        public static int user_id;
+        public static string user_role;
         public Form1()
         {
             InitializeComponent();
@@ -77,7 +79,9 @@ namespace Quote_Tracker
 
         private void loginFun()
         {
-            user_name = reader["full_name"].ToString().Trim();
+            user_name = reader["fullname"].ToString().Trim();
+            user_id = Convert.ToInt32(reader["id"]);
+            user_role = reader["role"].ToString().Trim();
             mainForm settingsForm = new mainForm();
             settingsForm.Show();
             this.Hide();

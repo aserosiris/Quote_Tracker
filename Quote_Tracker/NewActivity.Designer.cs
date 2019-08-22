@@ -65,6 +65,7 @@
             this.provider_textBox = new System.Windows.Forms.TextBox();
             this.sku_textBox = new System.Windows.Forms.TextBox();
             this.item_textBox = new System.Windows.Forms.TextBox();
+            this.save_act_btn = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.description_tab.SuspendLayout();
             this.quote_tab.SuspendLayout();
@@ -398,11 +399,22 @@
             this.item_textBox.Size = new System.Drawing.Size(268, 20);
             this.item_textBox.TabIndex = 0;
             // 
+            // save_act_btn
+            // 
+            this.save_act_btn.Location = new System.Drawing.Point(908, 582);
+            this.save_act_btn.Name = "save_act_btn";
+            this.save_act_btn.Size = new System.Drawing.Size(75, 23);
+            this.save_act_btn.TabIndex = 9;
+            this.save_act_btn.Text = "Save";
+            this.save_act_btn.UseVisualStyleBackColor = true;
+            this.save_act_btn.Click += new System.EventHandler(this.Save_act_btn_Click);
+            // 
             // NewActivity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1118, 718);
+            this.Controls.Add(this.save_act_btn);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.client_comboBox);
@@ -464,5 +476,6 @@
         private System.Windows.Forms.Label total_sale_label;
         private System.Windows.Forms.Label total_label;
         private System.Windows.Forms.Label percent_label;
+        private System.Windows.Forms.Button save_act_btn;
     }
 }

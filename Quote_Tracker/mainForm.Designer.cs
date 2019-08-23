@@ -32,6 +32,8 @@
             this.activity_new_btn = new System.Windows.Forms.Button();
             this.edit_activity_btn = new System.Windows.Forms.Button();
             this.view_finished_btn = new System.Windows.Forms.Button();
+            this.activities_dgv = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.activities_dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -63,6 +65,7 @@
             this.edit_activity_btn.TabIndex = 2;
             this.edit_activity_btn.Text = "Edit Existing";
             this.edit_activity_btn.UseVisualStyleBackColor = true;
+            this.edit_activity_btn.Click += new System.EventHandler(this.Edit_activity_btn_Click);
             // 
             // view_finished_btn
             // 
@@ -73,11 +76,20 @@
             this.view_finished_btn.Text = "View Finished";
             this.view_finished_btn.UseVisualStyleBackColor = true;
             // 
+            // activities_dgv
+            // 
+            this.activities_dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.activities_dgv.Location = new System.Drawing.Point(16, 92);
+            this.activities_dgv.Name = "activities_dgv";
+            this.activities_dgv.Size = new System.Drawing.Size(756, 309);
+            this.activities_dgv.TabIndex = 4;
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.activities_dgv);
             this.Controls.Add(this.view_finished_btn);
             this.Controls.Add(this.edit_activity_btn);
             this.Controls.Add(this.activity_new_btn);
@@ -85,6 +97,7 @@
             this.Name = "mainForm";
             this.Text = "Main Menu";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.activities_dgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -96,5 +109,6 @@
         private System.Windows.Forms.Button activity_new_btn;
         private System.Windows.Forms.Button edit_activity_btn;
         private System.Windows.Forms.Button view_finished_btn;
+        private System.Windows.Forms.DataGridView activities_dgv;
     }
 }

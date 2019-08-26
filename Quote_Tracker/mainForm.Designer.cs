@@ -83,6 +83,9 @@
             this.activities_dgv.Name = "activities_dgv";
             this.activities_dgv.Size = new System.Drawing.Size(756, 309);
             this.activities_dgv.TabIndex = 4;
+            this.activities_dgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Activities_dgv_CellContentDoubleClick);
+            this.activities_dgv.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Activities_dgv_CellDoubleClick);
+            this.activities_dgv.SelectionChanged += new System.EventHandler(this.Activities_dgv_SelectionChanged);
             // 
             // mainForm
             // 

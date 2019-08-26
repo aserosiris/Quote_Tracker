@@ -17,7 +17,8 @@ namespace Quote_Tracker
         {
             InitializeComponent();
         }
-
+        public static string activityIDEdit = "";
+        public static int id_activity_row = 0;
         private void Label1_Click(object sender, EventArgs e)
         {
             
@@ -30,7 +31,6 @@ namespace Quote_Tracker
             string result = "";
             label1.Text = "Welcome " + Form1.user_name;
             string view_query = "SELECT * FROM Activity_overview WHERE id ="+Form1.user_id+" AND Status = 'pending' OR Status = 'Overdue'";
-            string updateStatusQuery = "UPDATE tb_activity SET status = 'Overdue' WHERE id_user = "+Form1.user_id+ " AND end_date = '"+ System.DateTime.Today.ToShortDateString() + "')";
 
             string actQuery = @"UPDATE tb_activity SET status = 'Overdue' WHERE id_user = @userID AND end_date = @datecomp;";
             try
@@ -88,6 +88,33 @@ namespace Quote_Tracker
         {
             Edit_Activity goEdit = new Edit_Activity();
             goEdit.Show();
+        }
+
+        private void Activities_dgv_SelectionChanged(object sender, EventArgs e)
+        {
+
+            //id_activity_row = Convert.ToInt32(activityIDEdit);
+
+
+        }
+
+        private void Activities_dgv_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Activities_dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = this.activities_dgv.Rows[e.RowIndex];
+                activityIDEdit = row.Cells["id_activity"].Value.ToString();
+                Edit_Activity goEdit = new Edit_Activity();
+                goEdit.Show();
+
+            }
+
         }
     }
 }

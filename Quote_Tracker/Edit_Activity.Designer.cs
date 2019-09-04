@@ -59,6 +59,8 @@
             this.client_name_label = new System.Windows.Forms.Label();
             this.start_date_label = new System.Windows.Forms.Label();
             this.update_btn = new System.Windows.Forms.Button();
+            this.statusCLB = new System.Windows.Forms.CheckedListBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.description_tab.SuspendLayout();
             this.quote_tab.SuspendLayout();
@@ -357,11 +359,32 @@
             this.update_btn.UseVisualStyleBackColor = true;
             this.update_btn.Click += new System.EventHandler(this.Update_btn_Click);
             // 
+            // statusCLB
+            // 
+            this.statusCLB.FormattingEnabled = true;
+            this.statusCLB.Items.AddRange(new object[] {
+            "Finished"});
+            this.statusCLB.Location = new System.Drawing.Point(911, 28);
+            this.statusCLB.Name = "statusCLB";
+            this.statusCLB.Size = new System.Drawing.Size(65, 49);
+            this.statusCLB.TabIndex = 21;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(856, 30);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(40, 13);
+            this.label11.TabIndex = 22;
+            this.label11.Text = "Status:";
+            // 
             // Edit_Activity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1270, 710);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.statusCLB);
             this.Controls.Add(this.update_btn);
             this.Controls.Add(this.start_date_label);
             this.Controls.Add(this.client_name_label);
@@ -418,5 +441,7 @@
         private System.Windows.Forms.Label client_name_label;
         private System.Windows.Forms.Label start_date_label;
         private System.Windows.Forms.Button update_btn;
+        private System.Windows.Forms.CheckedListBox statusCLB;
+        private System.Windows.Forms.Label label11;
     }
 }

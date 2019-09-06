@@ -51,7 +51,6 @@
             this.sku_textBox = new System.Windows.Forms.TextBox();
             this.item_textBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.estimated_end_dtp = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.title_textBox = new System.Windows.Forms.TextBox();
@@ -61,6 +60,7 @@
             this.update_btn = new System.Windows.Forms.Button();
             this.statusCLB = new System.Windows.Forms.CheckedListBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.endDateTextBox = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.description_tab.SuspendLayout();
             this.quote_tab.SuspendLayout();
@@ -169,8 +169,9 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(3, 68);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1029, 286);
+            this.dataGridView1.Size = new System.Drawing.Size(1162, 286);
             this.dataGridView1.TabIndex = 15;
+            this.dataGridView1.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.DataGridView1_UserDeletingRow);
             // 
             // add_row_btn
             // 
@@ -290,13 +291,6 @@
             this.label4.TabIndex = 17;
             this.label4.Text = "Client";
             // 
-            // estimated_end_dtp
-            // 
-            this.estimated_end_dtp.Location = new System.Drawing.Point(554, 28);
-            this.estimated_end_dtp.Name = "estimated_end_dtp";
-            this.estimated_end_dtp.Size = new System.Drawing.Size(200, 20);
-            this.estimated_end_dtp.TabIndex = 15;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -368,6 +362,7 @@
             this.statusCLB.Name = "statusCLB";
             this.statusCLB.Size = new System.Drawing.Size(65, 49);
             this.statusCLB.TabIndex = 21;
+            this.statusCLB.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.StatusCLB_ItemCheck);
             // 
             // label11
             // 
@@ -378,18 +373,27 @@
             this.label11.TabIndex = 22;
             this.label11.Text = "Status:";
             // 
+            // endDateTextBox
+            // 
+            this.endDateTextBox.AutoSize = true;
+            this.endDateTextBox.Location = new System.Drawing.Point(551, 32);
+            this.endDateTextBox.Name = "endDateTextBox";
+            this.endDateTextBox.Size = new System.Drawing.Size(50, 13);
+            this.endDateTextBox.TabIndex = 23;
+            this.endDateTextBox.Text = "End date";
+            // 
             // Edit_Activity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1270, 710);
+            this.Controls.Add(this.endDateTextBox);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.statusCLB);
             this.Controls.Add(this.update_btn);
             this.Controls.Add(this.start_date_label);
             this.Controls.Add(this.client_name_label);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.estimated_end_dtp);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.title_textBox);
@@ -433,7 +437,6 @@
         private System.Windows.Forms.TextBox sku_textBox;
         private System.Windows.Forms.TextBox item_textBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker estimated_end_dtp;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox title_textBox;
@@ -443,5 +446,6 @@
         private System.Windows.Forms.Button update_btn;
         private System.Windows.Forms.CheckedListBox statusCLB;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label endDateTextBox;
     }
 }

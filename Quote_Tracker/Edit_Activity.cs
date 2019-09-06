@@ -33,6 +33,7 @@ namespace Quote_Tracker
         int f = 0;
         double percentAve = 0;
         DataTable table = new DataTable();
+        int activityID = Convert.ToInt32(mainForm.activityIDEdit);
 
         private void Edit_Activity_Load(object sender, EventArgs e)
         {
@@ -61,6 +62,7 @@ namespace Quote_Tracker
 
                         client_id = Convert.ToInt32(reader["id_client"]);
                         start_date_label.Text = reader["start_date"].ToString();
+                        endDateTextBox.Text = reader["end_date"].ToString();
                         title_textBox.Text = reader["title"].ToString();
                         richTextBox1.Text = reader["description"].ToString();
                         statusCLB.Items.Add(reader["status"].ToString());
@@ -159,52 +161,37 @@ namespace Quote_Tracker
         private void Update_btn_Click(object sender, EventArgs e)
         {
 
-            /*
+          
             string result = "";
             string quoteQuery;
             string idQuery;
-            string actQuery = @"INSERT INTO tb_activity  VALUES (@userid, @idclient, @title, @startdate, @enddate, @description, @status );";
             int lastID = 0;
+            string updateQry = @"UPDATE tb_activity SET title=@title, description=@description, status=@status WHERE id_activity="+activityID+ " ";
+            string statChange;
             try
             {
                 using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
                 {
-                    using (SqlCommand comm = new SqlCommand(actQuery, conn))
+                    using (SqlCommand comm = new SqlCommand(updateQry, conn))
                     {
                         comm.Connection = conn;
                         conn.Open();
                         string stat = "pending";
-
-                        comm.Parameters.Add("@userID", SqlDbType.Int).Value = Form1.user_id;
-                        //comm.Parameters.Add("@idclient", SqlDbType.Int).Value = clientid;
-                        comm.Parameters.Add("@title", SqlDbType.NChar).Value = title_textBox.Text.ToString();
-                        //comm.Parameters.Add("@startdate", SqlDbType.Date).Value = start_dtp.Value.Date;
-                        comm.Parameters.Add("@enddate", SqlDbType.Date).Value = estimated_end_dtp.Value.Date;
-                        comm.Parameters.Add("@description", SqlDbType.Text).Value = richTextBox1.Text.ToString();
-                        comm.Parameters.Add("@status", SqlDbType.NChar).Value = stat;
-                        comm.ExecuteNonQuery();
+                        //add status change to DB
+                        foreach (object ListItem in statusCLB.CheckedItems)
+                        {
+                            statChange = ListItem.ToString();
+                            comm.Parameters.Add("@title", SqlDbType.NChar).Value = title_textBox.Text.ToString();
+                            comm.Parameters.Add("@description", SqlDbType.Text).Value = richTextBox1.Text.ToString();
+                            comm.Parameters.Add("@status", SqlDbType.NChar).Value = statChange;
+                            comm.ExecuteNonQuery();
+                        }
 
 
                         idQuery = @"SELECT TOP 1 id_activity FROM tb_activity ORDER BY id_activity DESC";
                         comm.CommandText = idQuery;
                         //reader = comm.ExecuteReader();
                         lastID = Convert.ToInt32(comm.ExecuteScalar());
-
-
-                        for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
-                        {
-                            quoteQuery = @"INSERT INTO tb_quote (id_quote, item, sku, provider, qty, cog, sog, total) VALUES (" +
-                                lastID + ", '"
-                                + dataGridView1.Rows[i].Cells[0].Value + "', '"
-                                + dataGridView1.Rows[i].Cells[1].Value + "', '"
-                                + dataGridView1.Rows[i].Cells[2].Value + "', "
-                                + Convert.ToInt32(dataGridView1.Rows[i].Cells[3].Value) + ", "
-                                + Convert.ToDecimal(dataGridView1.Rows[i].Cells[4].Value) + ", "
-                                + Convert.ToDecimal(dataGridView1.Rows[i].Cells[5].Value) + ", "
-                                + Convert.ToDecimal(dataGridView1.Rows[i].Cells[6].Value) + ");";
-                            comm.CommandText = quoteQuery;
-                            comm.ExecuteNonQuery();
-                        }
 
 
                     }
@@ -215,7 +202,6 @@ namespace Quote_Tracker
                 result = ex.Message.ToString();
                 MessageBox.Show(result);
             }
-            */
 
             mainForm obj = (mainForm)Application.OpenForms["mainForm"];
 
@@ -368,7 +354,46 @@ namespace Quote_Tracker
                 e.Handled = true;
             }
         }
+
+        private void StatusCLB_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            for (int ix = 0; ix < statusCLB.Items.Count; ++ix)
+                if (ix != e.Index) statusCLB.SetItemChecked(ix, false);
+        }
         //END OF NUMERIC VALIDATION
+        private void DataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+
+            //MessageBox.Show(mainForm.activityIDEdit);
+
+           
+            
+            string deleteQry = @"DELETE FROM tb_quote WHERE id_quote =@actID AND sku =@sku";
+            string result;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                {
+                    using (SqlCommand comm = new SqlCommand(deleteQry, conn))
+                    {
+                        comm.Connection = conn;
+                        conn.Open();
+                        comm.Parameters.AddWithValue("@actID", Convert.ToInt32(mainForm.activityIDEdit));
+                        comm.Parameters.AddWithValue("@sku", e.Row.Cells[2].Value.ToString());
+                        comm.ExecuteNonQuery();
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message.ToString();
+                MessageBox.Show(result);
+            }
+
+        }
+
     }
 
 }

@@ -37,7 +37,7 @@ namespace Quote_Tracker
             label1.Text = "Welcome " + Form1.user_name;
             string view_query = "SELECT * FROM Activity_overview WHERE id =" + Form1.user_id + " AND Status = 'pending' OR Status = 'Overdue'";
 
-            string actQuery = @"UPDATE tb_activity SET status = 'Overdue' WHERE id_user = @userID AND end_date <= @datecomp;";
+            string actQuery = @"UPDATE tb_activity SET status = 'Overdue' WHERE id_user = @userID AND end_date <= @datecomp and status <>'Finished';";
             try
             {
                 using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))

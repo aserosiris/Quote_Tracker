@@ -247,6 +247,10 @@ namespace Quote_Tracker
                 MessageBox.Show(result);
             }
 
+            mainForm obj = (mainForm)Application.OpenForms["mainForm"];
+
+            obj.reloadData();
+
             MessageBox.Show("Activity Saved!");
             this.Close();
         }

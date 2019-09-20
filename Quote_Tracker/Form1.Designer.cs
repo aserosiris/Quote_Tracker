@@ -103,6 +103,7 @@
             this.Controls.Add(this.login_btn);
             this.Controls.Add(this.password_textBox);
             this.Controls.Add(this.email_textBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Blue Sky Supplies";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

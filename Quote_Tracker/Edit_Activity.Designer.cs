@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Edit_Activity));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.description_tab = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -399,6 +400,7 @@
             this.Controls.Add(this.title_textBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Edit_Activity";
             this.Text = "Edit_Activity";
             this.Load += new System.EventHandler(this.Edit_Activity_Load);

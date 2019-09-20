@@ -31,55 +31,139 @@ namespace Quote_Tracker
 
         public void loadData()
         {
-            DateTime myDateTime = DateTime.Now;
-            string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
-            string result = "";
-            label1.Text = "Welcome " + Form1.user_name;
-            string view_query = "SELECT * FROM Activity_overview WHERE id =" + Form1.user_id + " AND Status = 'pending' OR Status = 'Overdue'";
 
-            string actQuery = @"UPDATE tb_activity SET status = 'Overdue' WHERE id_user = @userID AND end_date <= @datecomp and status <>'Finished';";
-            try
+            if(Form1.user_role == "Admin")
             {
-                using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                DateTime myDateTime = DateTime.Now;
+                string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
+                string result = "";
+                label1.Text = "Welcome " + Form1.user_name;
+                string view_query = "SELECT * FROM Activity_overview WHERE Status = 'pending' OR Status = 'Overdue'";
+                string view_query2 = "SELECT tb_users.fullname, tb_activity.status, tb_activity.title, tb_activity.description FROM tb_activity LEFT JOIN  tb_users ON tb_activity.id_user = tb_users.id WHERE status = 'pending' OR status = 'Overdue'";
+                string actQuery = @"UPDATE tb_activity SET status = 'Overdue' WHERE end_date <= @datecomp and status <>'Finished';";
+                try
                 {
-                    using (SqlCommand comm = new SqlCommand(actQuery, conn))
+                    using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
                     {
-                        comm.Connection = conn;
-                        conn.Open();
-                        string stat = "pending";
+                        using (SqlCommand comm = new SqlCommand(actQuery, conn))
+                        {
+                            comm.Connection = conn;
+                            conn.Open();
+                            string stat = "pending";
+                            comm.Parameters.Add("@datecomp", SqlDbType.Date).Value = myDateTime.ToString("yyyy-MM-dd");
 
-                        comm.Parameters.Add("@userID", SqlDbType.Int).Value = Form1.user_id;
-                        comm.Parameters.Add("@datecomp", SqlDbType.Date).Value = myDateTime.ToString("yyyy-MM-dd");
-
-                        comm.ExecuteNonQuery();
+                            comm.ExecuteNonQuery();
 
 
 
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                result = ex.Message.ToString();
-                MessageBox.Show(result);
-            }
+                catch (Exception ex)
+                {
+                    result = ex.Message.ToString();
+                    MessageBox.Show(result);
+                }
 
-            using (var connection = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
-            using (var adapter = new SqlDataAdapter(view_query, connection))
-            {
-                var table = new DataTable();
-                table.Columns.Add("id_activity");
-                table.Columns.Add("id");
-                table.Columns.Add("Status");
-                table.Columns.Add("Client Name");
-                table.Columns.Add("Title");
-                table.Columns.Add("Estimated Date of Completion");
-                table.Columns.Add("Items Quoted");
+                using (var connection = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                using (var adapter = new SqlDataAdapter(view_query, connection))
+                {
+                    var table = new DataTable();
+                    
+                    table.Columns.Add("fullname");
+                    table.Columns.Add("Status");
+                    table.Columns.Add("Client Name");
+                    table.Columns.Add("Title");
+                    table.Columns.Add("Estimated Date of Completion");
+                    table.Columns.Add("Items Quoted");
+                    table.Columns.Add("id_activity");
+                    table.Columns.Add("id");
 
 
-                adapter.Fill(table);
-                this.activities_dgv.DataSource = table;
+                    adapter.Fill(table);
+                    this.activities_dgv.DataSource = table;
+                }
+                using (var connection = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                using (var adapter = new SqlDataAdapter(view_query2, connection))
+                {
+                    var table2 = new DataTable();
+                    table2.Columns.Add("fullname");
+                    table2.Columns.Add("status");
+                    table2.Columns.Add("title");
+                    table2.Columns.Add("description");
+
+
+                    adapter.Fill(table2);
+                    this.dgv_activities.DataSource = table2;
+                }
             }
+            else {
+                DateTime myDateTime = DateTime.Now;
+                string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
+                string result = "";
+                label1.Text = "Welcome " + Form1.user_name;
+                string view_query = "SELECT * FROM Activity_overview WHERE id =" + Form1.user_id + " AND Status = 'pending' OR Status = 'Overdue'";
+                string view_query2 = "SELECT status, title, description FROM tb_activity WHERE id_user =" + Form1.user_id + " AND status = 'pending' OR status = 'Overdue'";
+                string actQuery = @"UPDATE tb_activity SET status = 'Overdue' WHERE id_user = @userID AND end_date <= @datecomp and status <>'Finished';";
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                    {
+                        using (SqlCommand comm = new SqlCommand(actQuery, conn))
+                        {
+                            comm.Connection = conn;
+                            conn.Open();
+                            string stat = "pending";
+
+                            comm.Parameters.Add("@userID", SqlDbType.Int).Value = Form1.user_id;
+                            comm.Parameters.Add("@datecomp", SqlDbType.Date).Value = myDateTime.ToString("yyyy-MM-dd");
+
+                            comm.ExecuteNonQuery();
+
+
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message.ToString();
+                    MessageBox.Show(result);
+                }
+
+                using (var connection = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                using (var adapter = new SqlDataAdapter(view_query, connection))
+                {
+                    var table = new DataTable();
+                    table.Columns.Add("id_activity");
+                    table.Columns.Add("id");
+                    table.Columns.Add("Status");
+                    table.Columns.Add("Client Name");
+                    table.Columns.Add("Title");
+                    table.Columns.Add("Estimated Date of Completion");
+                    table.Columns.Add("Items Quoted");
+
+
+                    adapter.Fill(table);
+                    this.activities_dgv.DataSource = table;
+                }
+                using (var connection = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                using (var adapter = new SqlDataAdapter(view_query2, connection))
+                {
+                    var table2 = new DataTable();
+
+                    table2.Columns.Add("status");
+                    table2.Columns.Add("title");
+                    table2.Columns.Add("description");
+
+
+                    adapter.Fill(table2);
+                    this.dgv_activities.DataSource = table2;
+                }
+            }
+           
+
+
         }
 
         public void reloadData()
@@ -105,10 +189,30 @@ namespace Quote_Tracker
                 activities_dgv.DataSource = bSource;
                 connection.Close();
             }
-            
+            string view_query2 = "SELECT status, title, description FROM tb_activity WHERE id_user =" + Form1.user_id + " AND status = 'pending' OR status = 'Overdue'";
+            using (var connection = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+            using (var adapter = new SqlDataAdapter(view_query2, connection))
+            {
+                var table2 = new DataTable();
+
+                table2.Columns.Add("status");
+                table2.Columns.Add("title");
+                table2.Columns.Add("description");
+
+                DataTable tableRefresh2 = new DataTable();
+                adapter.Fill(tableRefresh2);
+                BindingSource bSource2 = new BindingSource();
+                bSource2.DataSource = tableRefresh2;
+                dgv_activities.DataSource = bSource2;
+                connection.Close();
+
+                // adapter.Fill(table2);
+                // this.dgv_activities.DataSource = table2;
+            }
 
 
-            
+
+
         }
 
         private void Activity_new_btn_Click(object sender, EventArgs e)
@@ -148,6 +252,12 @@ namespace Quote_Tracker
 
             }
 
+        }
+
+        private void View_finished_btn_Click(object sender, EventArgs e)
+        {
+            finishedQuotes finished = new finishedQuotes();
+            finished.Show();
         }
     }
 }

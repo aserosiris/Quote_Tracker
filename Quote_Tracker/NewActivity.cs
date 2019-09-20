@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GemBox.Spreadsheet;
+using GemBox.Spreadsheet.WinFormsUtilities;
+
 
 namespace Quote_Tracker
 {
@@ -15,6 +18,7 @@ namespace Quote_Tracker
     {
         public NewActivity()
         {
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
             InitializeComponent();
         }
         //Variables
@@ -255,7 +259,56 @@ namespace Quote_Tracker
             this.Close();
         }
 
-        
+        private void Upload_quote_btn_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XLS files (*.xls, *.xlt)|*.xls;*.xlt|XLSX files (*.xlsx, *.xlsm, *.xltx, *.xltm)|*.xlsx;*.xlsm;*.xltx;*.xltm|ODS files (*.ods, *.ots)|*.ods;*.ots|CSV files (*.csv, *.tsv)|*.csv;*.tsv|HTML files (*.html, *.htm)|*.html;*.htm";
+            openFileDialog.FilterIndex = 2;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var workbook = ExcelFile.Load(openFileDialog.FileName);
+
+                // From ExcelFile to DataGridView.
+                DataGridViewConverter.ExportToDataGridView(workbook.Worksheets.ActiveWorksheet, this.dataGridView1, new ExportToDataGridViewOptions() { ColumnHeaders = true });
+            }
+
+            /*
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            {
+
+
+                Convert.ToInt32(dataGridView1.Rows[i].Cells[3].Value);
+                Convert.ToDecimal(dataGridView1.Rows[i].Cells[4].Value);
+                Convert.ToDecimal(dataGridView1.Rows[i].Cells[5].Value);
+                Convert.ToDecimal(dataGridView1.Rows[i].Cells[6].Value);
+            }
+            */
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                //multiply qty  by cog and add the result to cogItem
+                cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[3].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
+                total_sale_label.Text = "Total CoG: $" + cogItem.ToString();
+
+                //adds the row total to sumprofit
+                sumProfit += Convert.ToDouble(dataGridView1.Rows[i].Cells[6].Value);
+                total_label.Text = "Total: $" + sumProfit.ToString();
+
+                //subtract to obtain the total earnings
+                totalProf = sumProfit - cogItem;
+                total_profit_label.Text = "Total Profit: $" + totalProf.ToString();
+
+                //calculate average markup for quote
+                percentAve = ((totalProf / cogItem) * 100);
+                percent_label.Text = "MarkUp Average: " + Math.Round(percentAve, 2).ToString() + "%";
+
+
+
+                i++;
+
+            }
+
+        }
     }
 
    

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewActivity));
             this.label1 = new System.Windows.Forms.Label();
             this.title_textBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -66,6 +67,7 @@
             this.sku_textBox = new System.Windows.Forms.TextBox();
             this.item_textBox = new System.Windows.Forms.TextBox();
             this.save_act_btn = new System.Windows.Forms.Button();
+            this.upload_quote_btn = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.description_tab.SuspendLayout();
             this.quote_tab.SuspendLayout();
@@ -409,11 +411,22 @@
             this.save_act_btn.UseVisualStyleBackColor = true;
             this.save_act_btn.Click += new System.EventHandler(this.Save_act_btn_Click);
             // 
+            // upload_quote_btn
+            // 
+            this.upload_quote_btn.Location = new System.Drawing.Point(325, 73);
+            this.upload_quote_btn.Name = "upload_quote_btn";
+            this.upload_quote_btn.Size = new System.Drawing.Size(155, 23);
+            this.upload_quote_btn.TabIndex = 10;
+            this.upload_quote_btn.Text = "Upload Quote";
+            this.upload_quote_btn.UseVisualStyleBackColor = true;
+            this.upload_quote_btn.Click += new System.EventHandler(this.Upload_quote_btn_Click);
+            // 
             // NewActivity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1118, 718);
+            this.Controls.Add(this.upload_quote_btn);
             this.Controls.Add(this.save_act_btn);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label4);
@@ -424,6 +437,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.title_textBox);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NewActivity";
             this.Text = "New Activity";
             this.Load += new System.EventHandler(this.NewActivity_Load);
@@ -477,5 +491,6 @@
         private System.Windows.Forms.Label total_label;
         private System.Windows.Forms.Label percent_label;
         private System.Windows.Forms.Button save_act_btn;
+        private System.Windows.Forms.Button upload_quote_btn;
     }
 }

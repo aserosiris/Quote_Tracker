@@ -28,12 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.activity_new_btn = new System.Windows.Forms.Button();
             this.edit_activity_btn = new System.Windows.Forms.Button();
             this.view_finished_btn = new System.Windows.Forms.Button();
             this.activities_dgv = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dgv_activities = new System.Windows.Forms.DataGridView();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.activities_dgv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_activities)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -75,6 +80,7 @@
             this.view_finished_btn.TabIndex = 3;
             this.view_finished_btn.Text = "View Finished";
             this.view_finished_btn.UseVisualStyleBackColor = true;
+            this.view_finished_btn.Click += new System.EventHandler(this.View_finished_btn_Click);
             // 
             // activities_dgv
             // 
@@ -87,20 +93,53 @@
             this.activities_dgv.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Activities_dgv_CellDoubleClick);
             this.activities_dgv.SelectionChanged += new System.EventHandler(this.Activities_dgv_SelectionChanged);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label2.Location = new System.Drawing.Point(12, 69);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(123, 20);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Pending Quotes";
+            // 
+            // dgv_activities
+            // 
+            this.dgv_activities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_activities.Location = new System.Drawing.Point(16, 447);
+            this.dgv_activities.Name = "dgv_activities";
+            this.dgv_activities.Size = new System.Drawing.Size(756, 281);
+            this.dgv_activities.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label3.Location = new System.Drawing.Point(12, 424);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 20);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Activities";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(799, 764);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.dgv_activities);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.activities_dgv);
             this.Controls.Add(this.view_finished_btn);
             this.Controls.Add(this.edit_activity_btn);
             this.Controls.Add(this.activity_new_btn);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "mainForm";
             this.Text = "Main Menu";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.activities_dgv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_activities)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -113,5 +152,8 @@
         private System.Windows.Forms.Button edit_activity_btn;
         private System.Windows.Forms.Button view_finished_btn;
         private System.Windows.Forms.DataGridView activities_dgv;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridView dgv_activities;
+        private System.Windows.Forms.Label label3;
     }
 }

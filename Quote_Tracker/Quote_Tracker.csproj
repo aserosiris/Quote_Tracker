@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GemBox.Spreadsheet, Version=45.0.35.1040, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
+      <HintPath>..\packages\GemBox.Spreadsheet.45.0.0.1040\lib\net35\GemBox.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="GemBox.Spreadsheet.WinFormsUtilities, Version=45.0.35.1040, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
+      <HintPath>..\packages\GemBox.Spreadsheet.WinFormsUtilities.45.0.0.1040\lib\net35\GemBox.Spreadsheet.WinFormsUtilities.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +57,18 @@
     </Compile>
     <Compile Include="Edit_Activity.Designer.cs">
       <DependentUpon>Edit_Activity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="finishedQuotes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="finishedQuotes.Designer.cs">
+      <DependentUpon>finishedQuotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FinishedViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FinishedViewer.Designer.cs">
+      <DependentUpon>FinishedViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -75,6 +93,12 @@
     <EmbeddedResource Include="Edit_Activity.resx">
       <DependentUpon>Edit_Activity.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="finishedQuotes.resx">
+      <DependentUpon>finishedQuotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FinishedViewer.resx">
+      <DependentUpon>FinishedViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,6 +117,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

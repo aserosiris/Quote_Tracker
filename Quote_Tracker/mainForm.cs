@@ -32,7 +32,7 @@ namespace Quote_Tracker
         public void loadData()
         {
 
-            if(Form1.user_role == "Admin")
+            if(Form1.user_role.Trim() == "Admin")
             {
                 DateTime myDateTime = DateTime.Now;
                 string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");

@@ -156,6 +156,7 @@ namespace Quote_Tracker
 
         private void Export_btn_Click(object sender, EventArgs e)
         {
+            /*
             var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "XLS files (*.xls)|*.xls|XLT files (*.xlt)|*.xlt|XLSX files (*.xlsx)|*.xlsx|XLSM files (*.xlsm)|*.xlsm|XLTX (*.xltx)|*.xltx|XLTM (*.xltm)|*.xltm|ODS (*.ods)|*.ods|OTS (*.ots)|*.ots|CSV (*.csv)|*.csv|TSV (*.tsv)|*.tsv|HTML (*.html)|*.html|MHTML (.mhtml)|*.mhtml|PDF (*.pdf)|*.pdf|XPS (*.xps)|*.xps|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|JPEG (*.jpg)|*.jpg|PNG (*.png)|*.png|TIFF (*.tif)|*.tif|WMP (*.wdp)|*.wdp";
             saveFileDialog.FilterIndex = 3;
@@ -170,6 +171,67 @@ namespace Quote_Tracker
 
                 workbook.Save(saveFileDialog.FileName);
             }
+            */
+
+
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "XLS files (*.xls)|*.xls|XLT files (*.xlt)|*.xlt|XLSX files (*.xlsx)|*.xlsx|XLSM files (*.xlsm)|*.xlsm|XLTX (*.xltx)|*.xltx|XLTM (*.xltm)|*.xltm|ODS (*.ods)|*.ods|OTS (*.ots)|*.ots|CSV (*.csv)|*.csv|TSV (*.tsv)|*.tsv|HTML (*.html)|*.html|MHTML (.mhtml)|*.mhtml|PDF (*.pdf)|*.pdf|XPS (*.xps)|*.xps|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|JPEG (*.jpg)|*.jpg|PNG (*.png)|*.png|TIFF (*.tif)|*.tif|WMP (*.wdp)|*.wdp";
+            saveFileDialog.FilterIndex = 3;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var workbook = ExcelFile.Load("Template.xlsx");
+
+                int workingDays = 8;
+
+                var startDate = DateTime.Now.AddDays(-workingDays);
+                var endDate = DateTime.Now;
+
+                var worksheet = workbook.Worksheets[0];
+
+                // Find cells with placeholder text and set their values.
+                int row, column;
+                if (worksheet.Cells.FindText("[Company Name]", true, true, out row, out column))
+                    worksheet.Cells[row, column].Value = client_name_label.Text;
+                if (worksheet.Cells.FindText("[Company Address]", true, true, out row, out column))
+                    worksheet.Cells[row, column].Value = "";
+                if (worksheet.Cells.FindText("[Date]", true, true, out row, out column))
+                    worksheet.Cells[row, column].Value = endDate;
+
+                // Copy template row.
+                row = 16;
+                worksheet.Rows.InsertCopy(row + 1, dataGridView1.Rows.Count - 1, worksheet.Rows[row]);
+
+                for(int i = 0; i< dataGridView1.Rows.Count-1; i++)
+                {
+                    var currentRow = worksheet.Rows[row + i];
+                    //currentRow.Cells[1].SetValue(dataGridView1.Rows[dataGridView1.SelectedRows[i].Index].Cells[0].Value.ToString());
+                    string item = dataGridView1.Rows[i].Cells[0].Value.ToString();
+                    string sku = dataGridView1.Rows[i].Cells[1].Value.ToString();
+                    string provider = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                    int qty = Convert.ToInt32(dataGridView1.Rows[i].Cells[3].Value);
+                    double cog = Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
+                    double sog = Convert.ToDouble(dataGridView1.Rows[i].Cells[5].Value);
+                    double total = Convert.ToDouble(dataGridView1.Rows[i].Cells[6].Value);
+                    currentRow.Cells[1].SetValue(item);
+                    currentRow.Cells[2].SetValue(sku);
+                    currentRow.Cells[3].SetValue(provider);
+                    currentRow.Cells[4].SetValue(qty);
+                    currentRow.Cells[5].SetValue(cog);
+                    currentRow.Cells[6].SetValue(sog);
+                    currentRow.Cells[7].SetValue(total);
+
+                }
+
+                // Calculate formulas in worksheet.
+                worksheet.Calculate();
+
+                workbook.Save(saveFileDialog.FileName);
+            }
+
+            
+
+
         }
     }
 }

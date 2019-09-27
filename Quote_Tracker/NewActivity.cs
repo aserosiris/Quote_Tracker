@@ -43,7 +43,7 @@ namespace Quote_Tracker
         {
             
             conn.Open();
-            SqlCommand sc = new SqlCommand("select Id_client, client_name from tb_client_info", conn);
+            SqlCommand sc = new SqlCommand("select Id_client, client_name from tb_client_info ORDER BY client_name ASC", conn);
             SqlDataReader reader;
 
             reader = sc.ExecuteReader();
@@ -228,17 +228,24 @@ namespace Quote_Tracker
 
                         for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
                         {
-                            quoteQuery = @"INSERT INTO tb_quote (id_quote, item, sku, provider, qty, cog, sog, total) VALUES ("+
-                                lastID +", '"
-                                + dataGridView1.Rows[i].Cells[0].Value + "', '"
-                                + dataGridView1.Rows[i].Cells[1].Value + "', '"
-                                + dataGridView1.Rows[i].Cells[2].Value + "', "
-                                + Convert.ToInt32(dataGridView1.Rows[i].Cells[3].Value) + ", "
-                                + Convert.ToDecimal(dataGridView1.Rows[i].Cells[4].Value) + ", "
-                                + Convert.ToDecimal(dataGridView1.Rows[i].Cells[5].Value) + ", "
-                                + Convert.ToDecimal(dataGridView1.Rows[i].Cells[6].Value) + ");";
-                            comm.CommandText = quoteQuery;
-                            comm.ExecuteNonQuery();
+                            quoteQuery = @"INSERT INTO tb_quote (id_quote, item, sku, provider, qty, cog, sog, total) VALUES (@lastID, @item, @sku, @provider, @qty, @cog, @sog, @total)";
+                            using (SqlConnection connn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                            {
+                                using (SqlCommand commm = new SqlCommand(quoteQuery, conn))
+                                {
+                                    
+                                    commm.Parameters.Add("@lastID", SqlDbType.Int).Value = lastID;
+                                    commm.Parameters.Add("@item", SqlDbType.NVarChar).Value = dataGridView1.Rows[i].Cells[0].Value;
+                                    commm.Parameters.Add("@sku", SqlDbType.NVarChar).Value = dataGridView1.Rows[i].Cells[1].Value;
+                                    commm.Parameters.Add("@provider", SqlDbType.NVarChar).Value = dataGridView1.Rows[i].Cells[2].Value;
+                                    commm.Parameters.Add("@qty", SqlDbType.Int).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[3].Value);
+                                    commm.Parameters.Add("@cog", SqlDbType.Float).Value = Convert.ToDecimal(dataGridView1.Rows[i].Cells[4].Value);
+                                    commm.Parameters.Add("@sog", SqlDbType.Float).Value = Convert.ToDecimal(dataGridView1.Rows[i].Cells[5].Value);
+                                    commm.Parameters.Add("@total", SqlDbType.Float).Value = Convert.ToDecimal(dataGridView1.Rows[i].Cells[6].Value);
+                                    //commm.CommandText = quoteQuery;
+                                    commm.ExecuteNonQuery();
+                                }
+                            }
                         }
 
 

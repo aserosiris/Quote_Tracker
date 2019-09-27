@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.activity_new_btn = new System.Windows.Forms.Button();
-            this.edit_activity_btn = new System.Windows.Forms.Button();
             this.view_finished_btn = new System.Windows.Forms.Button();
             this.activities_dgv = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
@@ -62,19 +61,9 @@
             this.activity_new_btn.UseVisualStyleBackColor = true;
             this.activity_new_btn.Click += new System.EventHandler(this.Activity_new_btn_Click);
             // 
-            // edit_activity_btn
-            // 
-            this.edit_activity_btn.Location = new System.Drawing.Point(159, 32);
-            this.edit_activity_btn.Name = "edit_activity_btn";
-            this.edit_activity_btn.Size = new System.Drawing.Size(141, 23);
-            this.edit_activity_btn.TabIndex = 2;
-            this.edit_activity_btn.Text = "Edit Existing";
-            this.edit_activity_btn.UseVisualStyleBackColor = true;
-            this.edit_activity_btn.Click += new System.EventHandler(this.Edit_activity_btn_Click);
-            // 
             // view_finished_btn
             // 
-            this.view_finished_btn.Location = new System.Drawing.Point(306, 32);
+            this.view_finished_btn.Location = new System.Drawing.Point(171, 32);
             this.view_finished_btn.Name = "view_finished_btn";
             this.view_finished_btn.Size = new System.Drawing.Size(141, 23);
             this.view_finished_btn.TabIndex = 3;
@@ -131,12 +120,12 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.activities_dgv);
             this.Controls.Add(this.view_finished_btn);
-            this.Controls.Add(this.edit_activity_btn);
             this.Controls.Add(this.activity_new_btn);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "mainForm";
             this.Text = "Main Menu";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.activities_dgv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_activities)).EndInit();
@@ -149,7 +138,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button activity_new_btn;
-        private System.Windows.Forms.Button edit_activity_btn;
         private System.Windows.Forms.Button view_finished_btn;
         private System.Windows.Forms.DataGridView activities_dgv;
         private System.Windows.Forms.Label label2;

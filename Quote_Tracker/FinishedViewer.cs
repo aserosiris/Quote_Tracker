@@ -10,6 +10,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GemBox.Spreadsheet;
 using GemBox.Spreadsheet.WinFormsUtilities;
+using iText.IO.Font.Constants;
+using iText.IO.Image;
+using iText.Kernel.Colors;
+using iText.Kernel.Font;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
 
 namespace Quote_Tracker
 {
@@ -108,7 +116,7 @@ namespace Quote_Tracker
                     using (var adapter = new SqlDataAdapter(getQuote, conn))
                     {
 
-
+                        
                         table.Columns.Add("Item");
                         table.Columns.Add("SKU");
                         table.Columns.Add("Provider");
@@ -231,6 +239,11 @@ namespace Quote_Tracker
 
             
 
+
+        }
+
+        private void Pdf_btn_Click(object sender, EventArgs e)
+        {
 
         }
     }

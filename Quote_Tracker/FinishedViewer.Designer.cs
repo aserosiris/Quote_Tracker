@@ -45,6 +45,7 @@
             this.total_sale_label = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.pdf_btn = new System.Windows.Forms.Button();
             this.quote_tab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -61,7 +62,7 @@
             // 
             // Export_btn
             // 
-            this.Export_btn.Location = new System.Drawing.Point(1014, 645);
+            this.Export_btn.Location = new System.Drawing.Point(1018, 620);
             this.Export_btn.Name = "Export_btn";
             this.Export_btn.Size = new System.Drawing.Size(142, 23);
             this.Export_btn.TabIndex = 32;
@@ -202,11 +203,22 @@
             this.tabControl1.Size = new System.Drawing.Size(1200, 462);
             this.tabControl1.TabIndex = 24;
             // 
+            // pdf_btn
+            // 
+            this.pdf_btn.Location = new System.Drawing.Point(1018, 649);
+            this.pdf_btn.Name = "pdf_btn";
+            this.pdf_btn.Size = new System.Drawing.Size(140, 23);
+            this.pdf_btn.TabIndex = 36;
+            this.pdf_btn.Text = "Export to PDF";
+            this.pdf_btn.UseVisualStyleBackColor = true;
+            this.pdf_btn.Click += new System.EventHandler(this.Pdf_btn_Click);
+            // 
             // FinishedViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1275, 704);
+            this.Controls.Add(this.pdf_btn);
             this.Controls.Add(this.endDateTextBox);
             this.Controls.Add(this.Export_btn);
             this.Controls.Add(this.start_date_label);
@@ -248,5 +260,6 @@
         private System.Windows.Forms.Label total_sale_label;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.Button pdf_btn;
     }
 }

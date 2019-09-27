@@ -102,7 +102,7 @@ namespace Quote_Tracker
                 string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
                 string result = "";
                 label1.Text = "Welcome " + Form1.user_name;
-                string view_query = "SELECT * FROM Activity_overview WHERE id =" + Form1.user_id + " AND Status = 'pending' OR Status = 'Overdue'";
+                string view_query = "SELECT * FROM Activity_overview WHERE id =" + Form1.user_id + " AND NOT Status = 'Finished'";
                 string view_query2 = "SELECT status, title, description FROM tb_activity WHERE id_user =" + Form1.user_id + " AND status = 'pending' OR status = 'Overdue'";
                 string actQuery = @"UPDATE tb_activity SET status = 'Overdue' WHERE id_user = @userID AND end_date <= @datecomp and status <>'Finished';";
                 try
@@ -221,11 +221,7 @@ namespace Quote_Tracker
             makeNew.Show();
         }
 
-        private void Edit_activity_btn_Click(object sender, EventArgs e)
-        {
-            Edit_Activity goEdit = new Edit_Activity();
-            goEdit.Show();
-        }
+      
 
         private void Activities_dgv_SelectionChanged(object sender, EventArgs e)
         {
@@ -258,6 +254,11 @@ namespace Quote_Tracker
         {
             finishedQuotes finished = new finishedQuotes();
             finished.Show();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

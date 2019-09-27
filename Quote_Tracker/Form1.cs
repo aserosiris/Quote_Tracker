@@ -87,7 +87,16 @@ namespace Quote_Tracker
             this.Hide();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
-}
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            pswd_Reset reset = new pswd_Reset();
+            reset.Show();
+        }
+    }
     }
 

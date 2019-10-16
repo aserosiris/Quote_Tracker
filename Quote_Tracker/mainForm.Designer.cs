@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dgv_activities = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
+            this.wc_btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.activities_dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_activities)).BeginInit();
             this.SuspendLayout();
@@ -110,11 +111,22 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Activities";
             // 
+            // wc_btn
+            // 
+            this.wc_btn.Location = new System.Drawing.Point(642, 32);
+            this.wc_btn.Name = "wc_btn";
+            this.wc_btn.Size = new System.Drawing.Size(116, 23);
+            this.wc_btn.TabIndex = 8;
+            this.wc_btn.Text = "WooCommerce";
+            this.wc_btn.UseVisualStyleBackColor = true;
+            this.wc_btn.Click += new System.EventHandler(this.Wc_btn_Click);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 764);
+            this.Controls.Add(this.wc_btn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dgv_activities);
             this.Controls.Add(this.label2);
@@ -143,5 +155,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dgv_activities;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button wc_btn;
     }
 }

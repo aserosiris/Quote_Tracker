@@ -62,6 +62,7 @@
             this.statusCLB = new System.Windows.Forms.CheckedListBox();
             this.label11 = new System.Windows.Forms.Label();
             this.endDateTextBox = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.description_tab.SuspendLayout();
             this.quote_tab.SuspendLayout();
@@ -383,11 +384,22 @@
             this.endDateTextBox.TabIndex = 23;
             this.endDateTextBox.Text = "End date";
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.label12.Location = new System.Drawing.Point(48, 618);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(288, 25);
+            this.label12.TabIndex = 24;
+            this.label12.Text = "Does this quote have a order #?";
+            // 
             // Edit_Activity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1270, 710);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.endDateTextBox);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.statusCLB);
@@ -449,5 +461,6 @@
         private System.Windows.Forms.CheckedListBox statusCLB;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label endDateTextBox;
+        private System.Windows.Forms.Label label12;
     }
 }

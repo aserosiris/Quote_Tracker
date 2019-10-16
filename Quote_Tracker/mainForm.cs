@@ -260,5 +260,11 @@ namespace Quote_Tracker
         {
             Application.Exit();
         }
+
+        private void Wc_btn_Click(object sender, EventArgs e)
+        {
+            WooCommerceOrders wc = new WooCommerceOrders();
+            wc.Show();
+        }
     }
 }

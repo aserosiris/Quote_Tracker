@@ -46,6 +46,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.pdf_btn = new System.Windows.Forms.Button();
+            this.quote_status_CB = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.quote_tab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -213,11 +215,37 @@
             this.pdf_btn.UseVisualStyleBackColor = true;
             this.pdf_btn.Click += new System.EventHandler(this.Pdf_btn_Click);
             // 
+            // quote_status_CB
+            // 
+            this.quote_status_CB.FormattingEnabled = true;
+            this.quote_status_CB.Items.AddRange(new object[] {
+            "Pending Approval by Admin",
+            "Sent to Customer",
+            "Approved/Accepted by Customer",
+            "Denied by Customer",
+            "Return For Changes"});
+            this.quote_status_CB.Location = new System.Drawing.Point(753, 39);
+            this.quote_status_CB.Name = "quote_status_CB";
+            this.quote_status_CB.Size = new System.Drawing.Size(230, 21);
+            this.quote_status_CB.TabIndex = 37;
+            this.quote_status_CB.SelectedIndexChanged += new System.EventHandler(this.quote_status_CB_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(757, 18);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(69, 13);
+            this.label5.TabIndex = 38;
+            this.label5.Text = "Quote Status";
+            // 
             // FinishedViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1275, 704);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.quote_status_CB);
             this.Controls.Add(this.pdf_btn);
             this.Controls.Add(this.endDateTextBox);
             this.Controls.Add(this.Export_btn);
@@ -261,5 +289,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Button pdf_btn;
+        private System.Windows.Forms.ComboBox quote_status_CB;
+        private System.Windows.Forms.Label label5;
     }
 }

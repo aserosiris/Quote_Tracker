@@ -198,7 +198,7 @@ namespace Quote_Tracker
             string result = "";
             string quoteQuery;
             string idQuery;
-            string actQuery = @"INSERT INTO tb_activity  VALUES (@userid, @idclient, @title, @startdate, @enddate, @description, @status );";
+            string actQuery = @"INSERT INTO tb_activity  VALUES (@userid, @idclient, @title, @startdate, @enddate, @description, @status, @quoteStatus, @submit_date, @orderStatus );";
             int lastID = 0;
             try
             {
@@ -217,6 +217,9 @@ namespace Quote_Tracker
                         comm.Parameters.Add("@enddate", SqlDbType.Date).Value = estimated_end_dtp.Value.Date;
                         comm.Parameters.Add("@description", SqlDbType.Text).Value = richTextBox1.Text.ToString();
                         comm.Parameters.Add("@status", SqlDbType.NChar).Value = stat;
+                        comm.Parameters.Add("@quoteStatus", SqlDbType.NChar).Value = "Pending Approval by Admin";
+                        comm.Parameters.Add("@submit_date", SqlDbType.Date).Value = start_dtp.Value.Date;
+                        comm.Parameters.Add("@orderStatus", SqlDbType.NChar).Value = "Not Applicable";
                         comm.ExecuteNonQuery();
 
 

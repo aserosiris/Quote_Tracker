@@ -19,6 +19,7 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 
+
 namespace Quote_Tracker
 {
     public partial class FinishedViewer : Form
@@ -41,6 +42,8 @@ namespace Quote_Tracker
         double percentAve = 0;
         DataTable table = new DataTable();
         int activityID = Convert.ToInt32(finishedQuotes.activityIDFinished);
+        string quote_status;
+        int status_quote;
 
         private void FinishedViewer_Load(object sender, EventArgs e)
         {
@@ -51,6 +54,7 @@ namespace Quote_Tracker
             string actQuery = @"SELECT * FROM tb_activity WHERE id_activity = @idactivity";
             string client_name = @"SELECT * FROM tb_client_info WHERE Id_client = @id_client";
             string querytotals = @"SELECT qty AS  Qty, cog AS CoG, sog AS SoG, total AS Total FROM tb_quote WHERE id_quote =" + Convert.ToInt32(finishedQuotes.activityIDFinished) + "";
+            
 
 
             try
@@ -71,6 +75,7 @@ namespace Quote_Tracker
                         start_date_label.Text = reader["start_date"].ToString();
                         endDateTextBox.Text = reader["end_date"].ToString();
                         title_textBox.Text = reader["title"].ToString();
+                        quote_status = reader["quote_status"].ToString();
                        
 
                     }
@@ -160,6 +165,30 @@ namespace Quote_Tracker
                 i++;
 
             }
+
+            if(String.Equals(quote_status,"Pending Approval by Admin")){
+                status_quote = 0;
+            }else if(String.Equals(quote_status, "Sent to Customer")){
+                status_quote = 1;
+            }
+            else if (String.Equals(quote_status, "Approved/Accepted by Customer"))
+            {
+                status_quote = 2;
+            }
+            else if (String.Equals(quote_status, "Denied by Customer"))
+            {
+                status_quote = 2;
+            }
+            else if (String.Equals(quote_status, "Return For Changes"))
+            {
+                status_quote = 4;
+            }
+            else
+            {
+                status_quote = 0;
+            }
+
+            quote_status_CB.SelectedIndex = status_quote;
         }
 
         private void Export_btn_Click(object sender, EventArgs e)
@@ -246,5 +275,49 @@ namespace Quote_Tracker
         {
 
         }
+
+        private void quote_status_CB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string newStatus = (String)quote_status_CB.SelectedItem;
+
+            if (String.Equals(newStatus, quote_status))
+            {
+               
+            }
+            else {
+                string result = "";
+                string updateQry = @"UPDATE tb_activity SET quote_status=@quote_status WHERE id_activity=" + activityID + " ";
+                string statChange;
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                    {
+                        using (SqlCommand comm = new SqlCommand(updateQry, conn))
+                        {
+                            comm.Connection = conn;
+                            conn.Open();
+
+                                comm.Parameters.Add("@quote_status", SqlDbType.NChar).Value = newStatus;
+                                comm.ExecuteNonQuery();
+                           
+
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message.ToString();
+                    MessageBox.Show(result);
+                }
+
+            }
+
+
+        }
+
+
+
     }
-}
+    }
+  

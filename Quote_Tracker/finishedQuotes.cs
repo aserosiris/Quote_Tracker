@@ -39,7 +39,8 @@ namespace Quote_Tracker
                 using (var adapter = new SqlDataAdapter(view_query, connection))
                 {
                     var table = new DataTable();
-                    table.Columns.Add("fullname");
+                    table.Columns.Add("Created By");
+                    table.Columns.Add("Quote Status");
                     table.Columns.Add("id_activity");
                     table.Columns.Add("id");
                     table.Columns.Add("Status");
@@ -47,6 +48,7 @@ namespace Quote_Tracker
                     table.Columns.Add("Title");
                     table.Columns.Add("Estimated Date of Completion");
                     table.Columns.Add("Items Quoted");
+                    
 
 
                     adapter.Fill(table);
@@ -96,6 +98,7 @@ namespace Quote_Tracker
                     table.Columns.Add("Title");
                     table.Columns.Add("Estimated Date of Completion");
                     table.Columns.Add("Items Quoted");
+                    table.Columns.Add("Quote Status");
 
 
                     adapter.Fill(table);

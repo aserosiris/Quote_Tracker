@@ -43,7 +43,7 @@ namespace Quote_Tracker
 
         private void WooCommerceOrders_Load(object sender, EventArgs e)
         {
-          
+            
 
             //--------------------------------------------------------------
 
@@ -85,7 +85,7 @@ namespace Quote_Tracker
             try
             {
                 connection.Open();
-               // MessageBox.Show("You are now connected!");
+               //MessageBox.Show("You are now connected!");
                 return true;
             }
             catch (MySqlException ex)
@@ -131,6 +131,11 @@ namespace Quote_Tracker
 
         public void Select()
         {
+            DateTime fromTime = from_dtp.Value;
+            DateTime toTime = to_dtp.Value;
+            string fromdate = fromTime.ToString("yyy-MM-dd");
+            string todate = toTime.ToString("yyyy-MM-dd");
+
             string OrderID = "SELECT " +
                 "p.ID AS 'Order ID'," +
                 "p.post_date AS 'Purchase Date'," +
@@ -156,7 +161,7 @@ namespace Quote_Tracker
                 "FROM  wp_posts AS p " +
                 "JOIN  wp_postmeta AS pm ON p.ID = pm.post_id " +
                 "JOIN  wp_woocommerce_order_items AS oi ON p.ID = oi.order_id " +
-                "WHERE post_type = 'shop_order' AND post_date BETWEEN '2019-08-31' AND '2019-10-01' " +
+                "WHERE post_type = 'shop_order' AND post_date BETWEEN '"+fromdate+ "' AND '" +todate+ "' " +
                 "GROUP BY p.ID";
 
             if (this.OpenConnection() == true)
@@ -182,5 +187,46 @@ namespace Quote_Tracker
             }
         }
 
+        private void search_btn_Click(object sender, EventArgs e)
+        {
+            Select();
+            //MessageBox.Show(from_dtp.Value.ToShortDateString());
+            dataGridView1.Refresh();
+            int rowsCount = dataGridView1.Rows.Count;
+            cogItem = 0;
+            for(int i=0; i<rowsCount -1; i++)
+            {
+
+                if (dataGridView1.Rows[i].Cells[6].Value == null || dataGridView1.Rows[i].Cells[6].Value == DBNull.Value)
+                {
+                    //multiply qty  by cog and add the result to cogItem
+                    cogItem += 0;
+                    total_lb.Text = "$" + cogItem.ToString();
+
+
+
+                    //i++;
+                }
+                else
+                {
+                    //multiply qty  by cog and add the result to cogItem
+                    cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[6].Value);
+                    total_lb.Text = "$" + cogItem.ToString();
+
+
+
+                    //i++;
+                }
+
+            }
+
+           // foreach (DataGridViewRow row in dataGridView1.Rows)
+           // {
+
+
+
+
+           // }
+        }
     }
 }

@@ -44,6 +44,7 @@ namespace Quote_Tracker
         int activityID = Convert.ToInt32(finishedQuotes.activityIDFinished);
         string quote_status;
         int status_quote;
+        string order_date;
 
         private void FinishedViewer_Load(object sender, EventArgs e)
         {
@@ -76,6 +77,7 @@ namespace Quote_Tracker
                         endDateTextBox.Text = reader["end_date"].ToString();
                         title_textBox.Text = reader["title"].ToString();
                         quote_status = reader["quote_status"].ToString();
+                        order_date = reader["submit_date"].ToString();
                        
 
                     }
@@ -84,8 +86,14 @@ namespace Quote_Tracker
             catch (Exception ex)
             {
                 result = ex.Message.ToString();
-                MessageBox.Show(result);
+             
             }
+
+            //SET DATE ON DATE TIME PICKER
+            
+            order_deliver_dtp.Value = Convert.ToDateTime(order_date.Substring(0, 10));
+
+
 
             try
             {
@@ -166,29 +174,35 @@ namespace Quote_Tracker
 
             }
 
-            if(String.Equals(quote_status,"Pending Approval by Admin")){
+            if(String.Equals(quote_status.Trim(),"Pending Approval by Admin")){
                 status_quote = 0;
-            }else if(String.Equals(quote_status, "Sent to Customer")){
+                order_deliver_dtp.Enabled = false;
+            }else if(String.Equals(quote_status.Trim(), "Sent to Customer")){
                 status_quote = 1;
             }
-            else if (String.Equals(quote_status, "Approved/Accepted by Customer"))
+            else if (String.Equals(quote_status.Trim(), "Approved/Accepted by Customer"))
             {
                 status_quote = 2;
             }
-            else if (String.Equals(quote_status, "Denied by Customer"))
+            else if (String.Equals(quote_status.Trim(), "Denied by Customer"))
             {
                 status_quote = 2;
+                order_deliver_dtp.Enabled = false;
             }
-            else if (String.Equals(quote_status, "Return For Changes"))
+            else if (String.Equals(quote_status.Trim(), "Return For Changes"))
             {
                 status_quote = 4;
+                order_deliver_dtp.Enabled = false;
             }
             else
             {
                 status_quote = 0;
+                order_deliver_dtp.Enabled = false;
             }
 
             quote_status_CB.SelectedIndex = status_quote;
+
+            
         }
 
         private void Export_btn_Click(object sender, EventArgs e)
@@ -301,7 +315,6 @@ namespace Quote_Tracker
                                 comm.ExecuteNonQuery();
                            
 
-
                         }
                     }
                 }
@@ -312,12 +325,45 @@ namespace Quote_Tracker
                 }
 
             }
+            if(String.Equals(newStatus, "Approved/Accepted by Customer"))
+            {
+                order_deliver_dtp.Enabled = true;
+            }
+            else
+            {
+                order_deliver_dtp.Enabled = false;
+            }
 
 
         }
 
+        private void order_deliver_dtp_ValueChanged(object sender, EventArgs e)
+        {
+            string result = "";
+            string updateQry = @"UPDATE tb_activity SET submit_date=@submitDate WHERE id_activity=" + activityID + " ";
+            string statChange;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                {
+                    using (SqlCommand comm = new SqlCommand(updateQry, conn))
+                    {
+                        comm.Connection = conn;
+                        conn.Open();
+
+                        comm.Parameters.Add("@submitDate", SqlDbType.Date).Value = order_deliver_dtp.Value.Date; ;
+                        comm.ExecuteNonQuery();
 
 
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message.ToString();
+                MessageBox.Show(result);
+            }
+        }
     }
     }
   

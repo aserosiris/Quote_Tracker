@@ -48,6 +48,8 @@
             this.pdf_btn = new System.Windows.Forms.Button();
             this.quote_status_CB = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.order_deliver_dtp = new System.Windows.Forms.DateTimePicker();
+            this.label6 = new System.Windows.Forms.Label();
             this.quote_tab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -239,11 +241,30 @@
             this.label5.TabIndex = 38;
             this.label5.Text = "Quote Status";
             // 
+            // order_deliver_dtp
+            // 
+            this.order_deliver_dtp.Location = new System.Drawing.Point(753, 87);
+            this.order_deliver_dtp.Name = "order_deliver_dtp";
+            this.order_deliver_dtp.Size = new System.Drawing.Size(200, 20);
+            this.order_deliver_dtp.TabIndex = 39;
+            this.order_deliver_dtp.ValueChanged += new System.EventHandler(this.order_deliver_dtp_ValueChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(757, 71);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(83, 13);
+            this.label6.TabIndex = 40;
+            this.label6.Text = "Order Submitted";
+            // 
             // FinishedViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1275, 704);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.order_deliver_dtp);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.quote_status_CB);
             this.Controls.Add(this.pdf_btn);
@@ -291,5 +312,7 @@
         private System.Windows.Forms.Button pdf_btn;
         private System.Windows.Forms.ComboBox quote_status_CB;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DateTimePicker order_deliver_dtp;
+        private System.Windows.Forms.Label label6;
     }
 }

@@ -45,7 +45,10 @@ namespace Quote_Tracker
         string quote_status;
         int status_quote;
         string order_date;
-
+        string order_status;
+        string orderSetString;
+        string orderDeliveredString;
+        string deliveryStatus;
         private void FinishedViewer_Load(object sender, EventArgs e)
         {
             //MessageBox.Show(mainForm.activityIDEdit);
@@ -55,7 +58,7 @@ namespace Quote_Tracker
             string actQuery = @"SELECT * FROM tb_activity WHERE id_activity = @idactivity";
             string client_name = @"SELECT * FROM tb_client_info WHERE Id_client = @id_client";
             string querytotals = @"SELECT qty AS  Qty, cog AS CoG, sog AS SoG, total AS Total FROM tb_quote WHERE id_quote =" + Convert.ToInt32(finishedQuotes.activityIDFinished) + "";
-            
+
 
 
             try
@@ -78,7 +81,13 @@ namespace Quote_Tracker
                         title_textBox.Text = reader["title"].ToString();
                         quote_status = reader["quote_status"].ToString();
                         order_date = reader["submit_date"].ToString();
-                       
+                        order_status = reader["order_status"].ToString();
+                        orderSetString = reader["submit_date"].ToString();
+                        orderDeliveredString = reader["delivery_order"].ToString();
+                       // order_deliver_dtp.Value = Convert.ToDateTime(orderSetString);
+                        //delivery_dtp.Value = Convert.ToDateTime(orderDeliveredString);
+
+
 
                     }
                 }
@@ -86,12 +95,27 @@ namespace Quote_Tracker
             catch (Exception ex)
             {
                 result = ex.Message.ToString();
-             
+
             }
 
             //SET DATE ON DATE TIME PICKER
-            
+
             order_deliver_dtp.Value = Convert.ToDateTime(order_date.Substring(0, 10));
+            delivery_dtp.Value = Convert.ToDateTime(orderDeliveredString);
+            //
+
+            if(String.Equals(order_status.Trim(), "Expected Delivery Date"))
+            {
+                order_status_CB.SelectedIndex = 0;
+            }
+            else if(String.Equals(order_status.Trim(), "Date Delivered"))
+            {
+                order_status_CB.SelectedIndex = 1;
+            }
+            else
+            {
+                order_status_CB.SelectedIndex = 2;
+            }
 
 
 
@@ -123,16 +147,17 @@ namespace Quote_Tracker
 
             try
             {
-                string getQuote = @"SELECT item AS Item, sku AS SKU, provider AS Provider, qty AS  Qty, cog AS CoG, sog AS SoG, total AS Total FROM tb_quote WHERE id_quote =" + Convert.ToInt32(finishedQuotes.activityIDFinished) + "";
+                string getQuote = @"SELECT item AS Item, sku AS SKU, provider AS Provider,unit AS Unit, qty AS  Qty, cog AS CoG, sog AS SoG, total AS Total FROM tb_quote WHERE id_quote =" + Convert.ToInt32(finishedQuotes.activityIDFinished) + "";
                 using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
                 {
                     using (var adapter = new SqlDataAdapter(getQuote, conn))
                     {
 
-                        
+
                         table.Columns.Add("Item");
                         table.Columns.Add("SKU");
                         table.Columns.Add("Provider");
+                        table.Columns.Add("Unit");
                         table.Columns.Add("Qty");
                         table.Columns.Add("CoG");
                         table.Columns.Add("SoG");
@@ -153,11 +178,11 @@ namespace Quote_Tracker
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 //multiply qty  by cog and add the result to cogItem
-                cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[3].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
+                cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[5].Value);
                 total_sale_label.Text = "Total CoG: $" + cogItem.ToString();
 
                 //adds the row total to sumprofit
-                sumProfit += Convert.ToDouble(dataGridView1.Rows[i].Cells[6].Value);
+                sumProfit += Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value);
                 total_label.Text = "Total: $" + sumProfit.ToString();
 
                 //subtract to obtain the total earnings
@@ -174,11 +199,19 @@ namespace Quote_Tracker
 
             }
 
-            if(String.Equals(quote_status.Trim(),"Pending Approval by Admin")){
+            if (String.Equals(quote_status.Trim(), "Pending Approval by Admin"))
+            {
                 status_quote = 0;
                 order_deliver_dtp.Enabled = false;
-            }else if(String.Equals(quote_status.Trim(), "Sent to Customer")){
+                order_status_CB.Enabled = false;
+                delivery_dtp.Enabled = false;
+            }
+            else if (String.Equals(quote_status.Trim(), "Sent to Customer"))
+            {
                 status_quote = 1;
+                order_deliver_dtp.Enabled = false;
+                order_status_CB.Enabled = false;
+                delivery_dtp.Enabled = false;
             }
             else if (String.Equals(quote_status.Trim(), "Approved/Accepted by Customer"))
             {
@@ -188,21 +221,27 @@ namespace Quote_Tracker
             {
                 status_quote = 2;
                 order_deliver_dtp.Enabled = false;
+                order_status_CB.Enabled = false;
+                delivery_dtp.Enabled = false;
             }
             else if (String.Equals(quote_status.Trim(), "Return For Changes"))
             {
                 status_quote = 4;
                 order_deliver_dtp.Enabled = false;
+                order_status_CB.Enabled = false;
+                delivery_dtp.Enabled = false;
             }
             else
             {
                 status_quote = 0;
                 order_deliver_dtp.Enabled = false;
+                order_status_CB.Enabled = false;
+                delivery_dtp.Enabled = false;
             }
 
             quote_status_CB.SelectedIndex = status_quote;
 
-            
+
         }
 
         private void Export_btn_Click(object sender, EventArgs e)
@@ -253,24 +292,26 @@ namespace Quote_Tracker
                 row = 16;
                 worksheet.Rows.InsertCopy(row + 1, dataGridView1.Rows.Count - 1, worksheet.Rows[row]);
 
-                for(int i = 0; i< dataGridView1.Rows.Count-1; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
                     var currentRow = worksheet.Rows[row + i];
                     //currentRow.Cells[1].SetValue(dataGridView1.Rows[dataGridView1.SelectedRows[i].Index].Cells[0].Value.ToString());
                     string item = dataGridView1.Rows[i].Cells[0].Value.ToString();
                     string sku = dataGridView1.Rows[i].Cells[1].Value.ToString();
                     string provider = dataGridView1.Rows[i].Cells[2].Value.ToString();
-                    int qty = Convert.ToInt32(dataGridView1.Rows[i].Cells[3].Value);
-                    double cog = Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
-                    double sog = Convert.ToDouble(dataGridView1.Rows[i].Cells[5].Value);
-                    double total = Convert.ToDouble(dataGridView1.Rows[i].Cells[6].Value);
+                    string units = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                    int qty = Convert.ToInt32(dataGridView1.Rows[i].Cells[4].Value);
+                    double cog = Convert.ToDouble(dataGridView1.Rows[i].Cells[5].Value);
+                    double sog = Convert.ToDouble(dataGridView1.Rows[i].Cells[6].Value);
+                    double total = Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value);
                     currentRow.Cells[1].SetValue(item);
                     currentRow.Cells[2].SetValue(sku);
                     currentRow.Cells[3].SetValue(provider);
-                    currentRow.Cells[4].SetValue(qty);
-                    currentRow.Cells[5].SetValue(cog);
-                    currentRow.Cells[6].SetValue(sog);
-                    currentRow.Cells[7].SetValue(total);
+                    currentRow.Cells[4].SetValue(units);
+                    currentRow.Cells[5].SetValue(qty);
+                    currentRow.Cells[6].SetValue(cog);
+                    currentRow.Cells[7].SetValue(sog);
+                    currentRow.Cells[8].SetValue(total);
 
                 }
 
@@ -280,7 +321,7 @@ namespace Quote_Tracker
                 workbook.Save(saveFileDialog.FileName);
             }
 
-            
+
 
 
         }
@@ -296,9 +337,10 @@ namespace Quote_Tracker
 
             if (String.Equals(newStatus, quote_status))
             {
-               
+
             }
-            else {
+            else
+            {
                 string result = "";
                 string updateQry = @"UPDATE tb_activity SET quote_status=@quote_status WHERE id_activity=" + activityID + " ";
                 string statChange;
@@ -311,9 +353,9 @@ namespace Quote_Tracker
                             comm.Connection = conn;
                             conn.Open();
 
-                                comm.Parameters.Add("@quote_status", SqlDbType.NChar).Value = newStatus;
-                                comm.ExecuteNonQuery();
-                           
+                            comm.Parameters.Add("@quote_status", SqlDbType.NChar).Value = newStatus;
+                            comm.ExecuteNonQuery();
+
 
                         }
                     }
@@ -325,13 +367,17 @@ namespace Quote_Tracker
                 }
 
             }
-            if(String.Equals(newStatus, "Approved/Accepted by Customer"))
+            if (String.Equals(newStatus, "Approved/Accepted by Customer"))
             {
                 order_deliver_dtp.Enabled = true;
+                order_status_CB.Enabled = true;
+
             }
             else
             {
                 order_deliver_dtp.Enabled = false;
+                order_status_CB.Enabled = false;
+                delivery_dtp.Enabled = false;
             }
 
 
@@ -351,7 +397,81 @@ namespace Quote_Tracker
                         comm.Connection = conn;
                         conn.Open();
 
-                        comm.Parameters.Add("@submitDate", SqlDbType.Date).Value = order_deliver_dtp.Value.Date; ;
+                        comm.Parameters.Add("@submitDate", SqlDbType.Date).Value = order_deliver_dtp.Value.Date;
+                        comm.ExecuteNonQuery();
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message.ToString();
+                MessageBox.Show(result);
+            }
+        }
+
+        private void order_status_CB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string newOrderStatus = (String)order_status_CB.SelectedItem;
+
+            if (String.Equals(newOrderStatus, order_status))
+            {
+
+            }
+            else
+            {
+                string result = "";
+                string updateQry = @"UPDATE tb_activity SET order_status=@order_status WHERE id_activity=" + activityID + " ";
+                string statChange;
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                    {
+                        using (SqlCommand comm = new SqlCommand(updateQry, conn))
+                        {
+                            comm.Connection = conn;
+                            conn.Open();
+
+                            comm.Parameters.Add("@order_status", SqlDbType.NChar).Value = newOrderStatus;
+                            comm.ExecuteNonQuery();
+
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message.ToString();
+                    MessageBox.Show(result);
+                }
+
+            }
+            if (String.Equals(newOrderStatus, "Expected Delivery Date") || String.Equals(newOrderStatus, "Date Delivered"))
+            {
+               // order_deliver_dtp.Enabled = true;
+                //order_status_CB.Enabled = true;
+                delivery_dtp.Enabled = true;
+
+            }
+
+        }
+
+        private void delivery_dtp_ValueChanged(object sender, EventArgs e)
+        {
+            string result = "";
+            string updateQry = @"UPDATE tb_activity SET delivery_order=@deliveryOrder WHERE id_activity=" + activityID + " ";
+            string statChange;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
+                {
+                    using (SqlCommand comm = new SqlCommand(updateQry, conn))
+                    {
+                        comm.Connection = conn;
+                        conn.Open();
+
+                        comm.Parameters.Add("@deliveryOrder", SqlDbType.Date).Value = delivery_dtp.Value.Date; 
                         comm.ExecuteNonQuery();
 
 
@@ -365,5 +485,5 @@ namespace Quote_Tracker
             }
         }
     }
-    }
+}
   

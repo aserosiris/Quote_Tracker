@@ -63,6 +63,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.endDateTextBox = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.unit_tb = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.description_tab.SuspendLayout();
             this.quote_tab.SuspendLayout();
@@ -100,6 +102,8 @@
             // 
             // quote_tab
             // 
+            this.quote_tab.Controls.Add(this.label13);
+            this.quote_tab.Controls.Add(this.unit_tb);
             this.quote_tab.Controls.Add(this.percent_label);
             this.quote_tab.Controls.Add(this.total_label);
             this.quote_tab.Controls.Add(this.total_profit_label);
@@ -223,7 +227,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(555, 15);
+            this.label7.Location = new System.Drawing.Point(448, 15);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(46, 13);
             this.label7.TabIndex = 7;
@@ -232,7 +236,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(340, 18);
+            this.label6.Location = new System.Drawing.Point(252, 18);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(29, 13);
             this.label6.TabIndex = 6;
@@ -265,14 +269,14 @@
             // 
             // provider_textBox
             // 
-            this.provider_textBox.Location = new System.Drawing.Point(558, 34);
+            this.provider_textBox.Location = new System.Drawing.Point(451, 34);
             this.provider_textBox.Name = "provider_textBox";
             this.provider_textBox.Size = new System.Drawing.Size(87, 20);
             this.provider_textBox.TabIndex = 2;
             // 
             // sku_textBox
             // 
-            this.sku_textBox.Location = new System.Drawing.Point(343, 34);
+            this.sku_textBox.Location = new System.Drawing.Point(255, 34);
             this.sku_textBox.Name = "sku_textBox";
             this.sku_textBox.Size = new System.Drawing.Size(190, 20);
             this.sku_textBox.TabIndex = 1;
@@ -281,7 +285,7 @@
             // 
             this.item_textBox.Location = new System.Drawing.Point(49, 34);
             this.item_textBox.Name = "item_textBox";
-            this.item_textBox.Size = new System.Drawing.Size(268, 20);
+            this.item_textBox.Size = new System.Drawing.Size(200, 20);
             this.item_textBox.TabIndex = 0;
             // 
             // label4
@@ -394,6 +398,22 @@
             this.label12.TabIndex = 24;
             this.label12.Text = "Does this quote have a order #?";
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(546, 15);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(26, 13);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "Unit";
+            // 
+            // unit_tb
+            // 
+            this.unit_tb.Location = new System.Drawing.Point(549, 34);
+            this.unit_tb.Name = "unit_tb";
+            this.unit_tb.Size = new System.Drawing.Size(87, 20);
+            this.unit_tb.TabIndex = 19;
+            // 
             // Edit_Activity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -462,5 +482,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label endDateTextBox;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox unit_tb;
     }
 }

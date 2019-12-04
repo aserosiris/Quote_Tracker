@@ -39,11 +39,14 @@
             // 
             // tabControlFinished
             // 
+            this.tabControlFinished.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlFinished.Controls.Add(this.tabPage2);
-            this.tabControlFinished.Location = new System.Drawing.Point(38, 74);
+            this.tabControlFinished.Location = new System.Drawing.Point(12, 74);
             this.tabControlFinished.Name = "tabControlFinished";
             this.tabControlFinished.SelectedIndex = 0;
-            this.tabControlFinished.Size = new System.Drawing.Size(1003, 552);
+            this.tabControlFinished.Size = new System.Drawing.Size(1071, 571);
             this.tabControlFinished.TabIndex = 0;
             // 
             // tabPage2
@@ -52,7 +55,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(995, 526);
+            this.tabPage2.Size = new System.Drawing.Size(1063, 545);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Quote";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -60,9 +63,10 @@
             // dgv_finished
             // 
             this.dgv_finished.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_finished.Location = new System.Drawing.Point(22, 48);
+            this.dgv_finished.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_finished.Location = new System.Drawing.Point(3, 3);
             this.dgv_finished.Name = "dgv_finished";
-            this.dgv_finished.Size = new System.Drawing.Size(924, 430);
+            this.dgv_finished.Size = new System.Drawing.Size(1057, 539);
             this.dgv_finished.TabIndex = 0;
             this.dgv_finished.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_finished_CellDoubleClick);
             // 

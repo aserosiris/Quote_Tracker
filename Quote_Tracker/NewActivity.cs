@@ -43,16 +43,17 @@ namespace Quote_Tracker
         {
             
             conn.Open();
-            SqlCommand sc = new SqlCommand("select Id_client, client_name from tb_client_info ORDER BY client_name ASC", conn);
+            /* SqlCommand sc = new SqlCommand("select Id_client, client_name from tb_client_info ORDER BY client_name ASC", conn); */
+            SqlCommand sc = new SqlCommand("select * from tb_client_status", conn);
             SqlDataReader reader;
 
             reader = sc.ExecuteReader();
             DataTable dt = new DataTable();
-            dt.Columns.Add("client_name", typeof(string));
-            dt.Columns.Add("Id_client", typeof(int));
+            dt.Columns.Add("client_type", typeof(string));
+            dt.Columns.Add("id_client_type", typeof(int));
             dt.Load(reader);
-            client_comboBox.ValueMember = "Id_client";
-            client_comboBox.DisplayMember = "client_name";
+            client_comboBox.ValueMember = "id_client_type";
+            client_comboBox.DisplayMember = "client_type";
             client_comboBox.DataSource = dt;
 
             conn.Close();
@@ -71,6 +72,7 @@ namespace Quote_Tracker
             quote.Columns.Add("Item");
             quote.Columns.Add("SKU");
             quote.Columns.Add("Provider");
+            quote.Columns.Add("Unit");
             quote.Columns.Add("Qty");
             quote.Columns.Add("CoG");
             quote.Columns.Add("SoG");
@@ -79,13 +81,14 @@ namespace Quote_Tracker
            
 
 
-            if (item_textBox.Text != "" && sku_textBox.Text != "" && provider_textBox.Text != "" && qty_textBox.Text != "" && cog_textBox.Text != "" && sog_textBox.Text != "")
+            if (item_textBox.Text != "" && sku_textBox.Text != "" && provider_textBox.Text != "" && unit_tb.Text !="" && qty_textBox.Text != "" && cog_textBox.Text != "" && sog_textBox.Text != "")
             {
 
                 DataRow row = quote.NewRow();
                 row["Item"] = item_textBox.Text;
                 row["SKU"] = sku_textBox.Text;
                 row["Provider"] = provider_textBox.Text;
+                row["Unit"] = unit_tb.Text;
                 row["Qty"] = qty_textBox.Text;
                 row["CoG"] = cog_textBox.Text;
                 row["SoG"] = sog_textBox.Text;
@@ -100,10 +103,11 @@ namespace Quote_Tracker
                     dataGridView1.Rows[num].Cells[0].Value = dRow["Item"].ToString();
                     dataGridView1.Rows[num].Cells[1].Value = dRow["SKU"].ToString();
                     dataGridView1.Rows[num].Cells[2].Value = dRow["Provider"].ToString();
-                    dataGridView1.Rows[num].Cells[3].Value = dRow["Qty"].ToString();
-                    dataGridView1.Rows[num].Cells[4].Value = dRow["CoG"].ToString();
-                    dataGridView1.Rows[num].Cells[5].Value = dRow["SoG"].ToString();
-                    dataGridView1.Rows[num].Cells[6].Value = dRow["Total"].ToString();
+                    dataGridView1.Rows[num].Cells[3].Value = dRow["Unit"].ToString();
+                    dataGridView1.Rows[num].Cells[4].Value = dRow["Qty"].ToString();
+                    dataGridView1.Rows[num].Cells[5].Value = dRow["CoG"].ToString();
+                    dataGridView1.Rows[num].Cells[6].Value = dRow["SoG"].ToString();
+                    dataGridView1.Rows[num].Cells[7].Value = dRow["Total"].ToString();
 
                 }
 
@@ -115,11 +119,11 @@ namespace Quote_Tracker
                 sog_textBox.Clear();
 
                 //multiply qty  by cog and add the result to cogItem
-                cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[3].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
+                cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[5].Value);
                 total_sale_label.Text = "Total CoG: $" + cogItem.ToString();
 
                 //adds the row total to sumprofit
-                sumProfit += Convert.ToDouble(dataGridView1.Rows[i].Cells[6].Value);
+                sumProfit += Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value);
                 total_label.Text = "Total: $" + sumProfit.ToString();
 
                 //subtract to obtain the total earnings
@@ -198,7 +202,7 @@ namespace Quote_Tracker
             string result = "";
             string quoteQuery;
             string idQuery;
-            string actQuery = @"INSERT INTO tb_activity  VALUES (@userid, @idclient, @title, @startdate, @enddate, @description, @status, @quoteStatus, @submit_date, @orderStatus );";
+            string actQuery = @"INSERT INTO tb_activity  VALUES (@userid, @idclient, @title, @startdate, @enddate, @description, @status, @quoteStatus, @submit_date, @orderStatus, @delivery_order, @marketer );";
             int lastID = 0;
             try
             {
@@ -220,6 +224,8 @@ namespace Quote_Tracker
                         comm.Parameters.Add("@quoteStatus", SqlDbType.NChar).Value = "Pending Approval by Admin";
                         comm.Parameters.Add("@submit_date", SqlDbType.Date).Value = start_dtp.Value.Date;
                         comm.Parameters.Add("@orderStatus", SqlDbType.NChar).Value = "Not Applicable";
+                        comm.Parameters.Add("@delivery_order", SqlDbType.Date).Value = "2019-01-01";
+                        comm.Parameters.Add("@marketer", SqlDbType.NChar).Value = marketer_textBox.Text.ToString();
                         comm.ExecuteNonQuery();
 
 
@@ -231,7 +237,7 @@ namespace Quote_Tracker
 
                         for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
                         {
-                            quoteQuery = @"INSERT INTO tb_quote (id_quote, item, sku, provider, qty, cog, sog, total) VALUES (@lastID, @item, @sku, @provider, @qty, @cog, @sog, @total)";
+                            quoteQuery = @"INSERT INTO tb_quote (id_quote, item, sku, provider, unit, qty, cog, sog, total) VALUES (@lastID, @item, @sku, @provider, @unit, @qty, @cog, @sog, @total)";
                             using (SqlConnection connn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
                             {
                                 using (SqlCommand commm = new SqlCommand(quoteQuery, conn))
@@ -241,10 +247,11 @@ namespace Quote_Tracker
                                     commm.Parameters.Add("@item", SqlDbType.NVarChar).Value = dataGridView1.Rows[i].Cells[0].Value;
                                     commm.Parameters.Add("@sku", SqlDbType.NVarChar).Value = dataGridView1.Rows[i].Cells[1].Value;
                                     commm.Parameters.Add("@provider", SqlDbType.NVarChar).Value = dataGridView1.Rows[i].Cells[2].Value;
-                                    commm.Parameters.Add("@qty", SqlDbType.Int).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[3].Value);
-                                    commm.Parameters.Add("@cog", SqlDbType.Float).Value = Convert.ToDecimal(dataGridView1.Rows[i].Cells[4].Value);
-                                    commm.Parameters.Add("@sog", SqlDbType.Float).Value = Convert.ToDecimal(dataGridView1.Rows[i].Cells[5].Value);
-                                    commm.Parameters.Add("@total", SqlDbType.Float).Value = Convert.ToDecimal(dataGridView1.Rows[i].Cells[6].Value);
+                                    commm.Parameters.Add("@unit", SqlDbType.NVarChar).Value = dataGridView1.Rows[i].Cells[3].Value;
+                                    commm.Parameters.Add("@qty", SqlDbType.Int).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[4].Value);
+                                    commm.Parameters.Add("@cog", SqlDbType.Float).Value = Convert.ToDecimal(dataGridView1.Rows[i].Cells[5].Value);
+                                    commm.Parameters.Add("@sog", SqlDbType.Float).Value = Convert.ToDecimal(dataGridView1.Rows[i].Cells[6].Value);
+                                    commm.Parameters.Add("@total", SqlDbType.Float).Value = Convert.ToDecimal(dataGridView1.Rows[i].Cells[7].Value);
                                     //commm.CommandText = quoteQuery;
                                     commm.ExecuteNonQuery();
                                 }
@@ -297,11 +304,11 @@ namespace Quote_Tracker
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 //multiply qty  by cog and add the result to cogItem
-                cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[3].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
+                cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[5].Value);
                 total_sale_label.Text = "Total CoG: $" + cogItem.ToString();
 
                 //adds the row total to sumprofit
-                sumProfit += Convert.ToDouble(dataGridView1.Rows[i].Cells[6].Value);
+                sumProfit += Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value);
                 total_label.Text = "Total: $" + sumProfit.ToString();
 
                 //subtract to obtain the total earnings
@@ -317,6 +324,11 @@ namespace Quote_Tracker
                 i++;
 
             }
+
+        }
+
+        private void quote_tab_Click(object sender, EventArgs e)
+        {
 
         }
     }

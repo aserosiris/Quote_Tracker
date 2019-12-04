@@ -105,7 +105,7 @@ namespace Quote_Tracker
 
             try
             {
-                string getQuote = @"SELECT item AS Item, sku AS SKU, provider AS Provider, qty AS  Qty, cog AS CoG, sog AS SoG, total AS Total FROM tb_quote WHERE id_quote ="+ Convert.ToInt32(mainForm.activityIDEdit) +"";
+                string getQuote = @"SELECT item AS Item, sku AS SKU, provider AS Provider,unit as Unit, qty AS  Qty, cog AS CoG, sog AS SoG, total AS Total FROM tb_quote WHERE id_quote ="+ Convert.ToInt32(mainForm.activityIDEdit) +"";
                 using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
                 {
                     using (var adapter = new SqlDataAdapter(getQuote, conn))
@@ -115,6 +115,7 @@ namespace Quote_Tracker
                         table.Columns.Add("Item");
                         table.Columns.Add("SKU");
                         table.Columns.Add("Provider");
+                        table.Columns.Add("Unit");
                         table.Columns.Add("Qty");
                         table.Columns.Add("CoG");
                         table.Columns.Add("SoG");
@@ -135,11 +136,11 @@ namespace Quote_Tracker
             foreach(DataGridViewRow row in dataGridView1.Rows)
             {
                 //multiply qty  by cog and add the result to cogItem
-                cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[3].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
+                cogItem += Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[5].Value);
                 total_sale_label.Text = "Total CoG: $" + cogItem.ToString();
 
                 //adds the row total to sumprofit
-                sumProfit += Convert.ToDouble(dataGridView1.Rows[i].Cells[6].Value);
+                sumProfit += Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value);
                 total_label.Text = "Total: $" + sumProfit.ToString();
 
                 //subtract to obtain the total earnings
@@ -218,7 +219,7 @@ namespace Quote_Tracker
         private void Add_row_btn_Click(object sender, EventArgs e)
         {
             string result = "";
-            string newItemQuote = @"INSERT INTO tb_quote (id_quote, item, sku, provider, qty, cog, sog, total) VALUES (@id_quote, @item, @sku, @provider, @qty, @cog, @sog, @total)";
+            string newItemQuote = @"INSERT INTO tb_quote (id_quote, item, sku, provider, unit, qty, cog, sog, total) VALUES (@id_quote, @item, @sku, @provider, @unit, @qty, @cog, @sog, @total)";
             try
             {
                 using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
@@ -233,6 +234,7 @@ namespace Quote_Tracker
                         comm.Parameters.Add("@item", SqlDbType.NChar).Value = item_textBox.Text.ToString();
                         comm.Parameters.Add("@sku", SqlDbType.NChar).Value = sku_textBox.Text.ToString();
                         comm.Parameters.Add("@provider", SqlDbType.NChar).Value = provider_textBox.Text.ToString();
+                        comm.Parameters.Add("@unit", SqlDbType.NVarChar).Value = unit_tb.Text.ToString();
                         comm.Parameters.Add("@qty", SqlDbType.Int).Value = Convert.ToInt32(qty_textBox.Text);
                         comm.Parameters.Add("@cog", SqlDbType.Decimal).Value = Convert.ToDecimal(cog_textBox.Text);
                         comm.Parameters.Add("@sog", SqlDbType.Decimal).Value = Convert.ToDecimal(sog_textBox.Text);
@@ -242,6 +244,7 @@ namespace Quote_Tracker
                         item_textBox.Clear();
                         sku_textBox.Clear();
                         provider_textBox.Clear();
+                        unit_tb.Clear();
                         qty_textBox.Clear();
                         cog_textBox.Clear();
                         sog_textBox.Clear();
@@ -260,7 +263,7 @@ namespace Quote_Tracker
   
             try
             {
-                string getQuote = @"SELECT item AS Item, sku AS SKU, provider AS Provider, qty AS  Qty, cog AS CoG, sog AS SoG, total AS Total FROM tb_quote WHERE id_quote =" + Convert.ToInt32(mainForm.activityIDEdit) + "";
+                string getQuote = @"SELECT item AS Item, sku AS SKU, provider AS Provider, unit AS Unit, qty AS  Qty, cog AS CoG, sog AS SoG, total AS Total FROM tb_quote WHERE id_quote =" + Convert.ToInt32(mainForm.activityIDEdit) + "";
                 using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.32;Initial Catalog=BS_ACTIVITY;User ID=sa;Password=2000lomaland"))
                 {
                     using (var adapter = new SqlDataAdapter(getQuote, conn))
@@ -289,11 +292,11 @@ namespace Quote_Tracker
             f = 0;
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                cogItem += Convert.ToDouble(dataGridView1.Rows[f].Cells[3].Value) * Convert.ToDouble(dataGridView1.Rows[f].Cells[4].Value);
+                cogItem += Convert.ToDouble(dataGridView1.Rows[f].Cells[4].Value) * Convert.ToDouble(dataGridView1.Rows[f].Cells[5].Value);
                 total_sale_label.Text = "Total CoG: $" + cogItem.ToString();
 
                 //adds the row total to sumprofit
-                sumProfit += Convert.ToDouble(dataGridView1.Rows[f].Cells[6].Value);
+                sumProfit += Convert.ToDouble(dataGridView1.Rows[f].Cells[7].Value);
                 total_label.Text = "Total: $" + sumProfit.ToString();
 
                 //subtract to obtain the total earnings
@@ -381,7 +384,6 @@ namespace Quote_Tracker
                         comm.Parameters.AddWithValue("@actID", Convert.ToInt32(mainForm.activityIDEdit));
                         comm.Parameters.AddWithValue("@sku", e.Row.Cells[2].Value.ToString());
                         comm.ExecuteNonQuery();
-
 
                     }
                 }

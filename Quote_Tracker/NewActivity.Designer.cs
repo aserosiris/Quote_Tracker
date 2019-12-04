@@ -41,6 +41,8 @@
             this.description_tab = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.quote_tab = new System.Windows.Forms.TabPage();
+            this.unit_tb = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.percent_label = new System.Windows.Forms.Label();
             this.total_label = new System.Windows.Forms.Label();
             this.total_profit_label = new System.Windows.Forms.Label();
@@ -49,6 +51,7 @@
             this.item_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sku_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.provider_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.qty_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cog_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sog_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,6 +71,8 @@
             this.item_textBox = new System.Windows.Forms.TextBox();
             this.save_act_btn = new System.Windows.Forms.Button();
             this.upload_quote_btn = new System.Windows.Forms.Button();
+            this.marketer_textBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.description_tab.SuspendLayout();
             this.quote_tab.SuspendLayout();
@@ -85,7 +90,7 @@
             // 
             // title_textBox
             // 
-            this.title_textBox.Location = new System.Drawing.Point(45, 25);
+            this.title_textBox.Location = new System.Drawing.Point(71, 25);
             this.title_textBox.Name = "title_textBox";
             this.title_textBox.Size = new System.Drawing.Size(191, 20);
             this.title_textBox.TabIndex = 1;
@@ -93,15 +98,15 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(322, 9);
+            this.label2.Location = new System.Drawing.Point(601, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 13);
+            this.label2.Size = new System.Drawing.Size(85, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Starting Date";
+            this.label2.Text = "Date Requested";
             // 
             // start_dtp
             // 
-            this.start_dtp.Location = new System.Drawing.Point(325, 25);
+            this.start_dtp.Location = new System.Drawing.Point(604, 25);
             this.start_dtp.Name = "start_dtp";
             this.start_dtp.Size = new System.Drawing.Size(200, 20);
             this.start_dtp.TabIndex = 3;
@@ -109,7 +114,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(543, 12);
+            this.label3.Location = new System.Drawing.Point(822, 12);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 13);
             this.label3.TabIndex = 4;
@@ -117,7 +122,7 @@
             // 
             // estimated_end_dtp
             // 
-            this.estimated_end_dtp.Location = new System.Drawing.Point(546, 28);
+            this.estimated_end_dtp.Location = new System.Drawing.Point(825, 28);
             this.estimated_end_dtp.Name = "estimated_end_dtp";
             this.estimated_end_dtp.Size = new System.Drawing.Size(200, 20);
             this.estimated_end_dtp.TabIndex = 5;
@@ -125,7 +130,7 @@
             // client_comboBox
             // 
             this.client_comboBox.FormattingEnabled = true;
-            this.client_comboBox.Location = new System.Drawing.Point(45, 60);
+            this.client_comboBox.Location = new System.Drawing.Point(71, 60);
             this.client_comboBox.Name = "client_comboBox";
             this.client_comboBox.Size = new System.Drawing.Size(191, 21);
             this.client_comboBox.TabIndex = 6;
@@ -136,9 +141,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 68);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(33, 13);
+            this.label4.Size = new System.Drawing.Size(60, 13);
             this.label4.TabIndex = 7;
-            this.label4.Text = "Client";
+            this.label4.Text = "Client Type";
             // 
             // tabControl1
             // 
@@ -172,6 +177,8 @@
             // 
             // quote_tab
             // 
+            this.quote_tab.Controls.Add(this.unit_tb);
+            this.quote_tab.Controls.Add(this.label11);
             this.quote_tab.Controls.Add(this.percent_label);
             this.quote_tab.Controls.Add(this.total_label);
             this.quote_tab.Controls.Add(this.total_profit_label);
@@ -197,6 +204,23 @@
             this.quote_tab.TabIndex = 1;
             this.quote_tab.Text = "Quote";
             this.quote_tab.UseVisualStyleBackColor = true;
+            this.quote_tab.Click += new System.EventHandler(this.quote_tab_Click);
+            // 
+            // unit_tb
+            // 
+            this.unit_tb.Location = new System.Drawing.Point(575, 34);
+            this.unit_tb.Name = "unit_tb";
+            this.unit_tb.Size = new System.Drawing.Size(79, 20);
+            this.unit_tb.TabIndex = 20;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(572, 15);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(26, 13);
+            this.label11.TabIndex = 19;
+            this.label11.Text = "Unit";
             // 
             // percent_label
             // 
@@ -245,6 +269,7 @@
             this.item_col,
             this.sku_col,
             this.provider_col,
+            this.Unit,
             this.qty_col,
             this.cog_col,
             this.sog_col,
@@ -270,6 +295,11 @@
             // 
             this.provider_col.HeaderText = "Provider";
             this.provider_col.Name = "provider_col";
+            // 
+            // Unit
+            // 
+            this.Unit.HeaderText = "Unit";
+            this.Unit.Name = "Unit";
             // 
             // qty_col
             // 
@@ -330,7 +360,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(648, 18);
+            this.label8.Location = new System.Drawing.Point(667, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(23, 13);
             this.label8.TabIndex = 8;
@@ -339,7 +369,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(555, 15);
+            this.label7.Location = new System.Drawing.Point(479, 15);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(46, 13);
             this.label7.TabIndex = 7;
@@ -348,7 +378,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(340, 18);
+            this.label6.Location = new System.Drawing.Point(264, 18);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(29, 13);
             this.label6.TabIndex = 6;
@@ -373,7 +403,7 @@
             // 
             // qty_textBox
             // 
-            this.qty_textBox.Location = new System.Drawing.Point(651, 34);
+            this.qty_textBox.Location = new System.Drawing.Point(670, 34);
             this.qty_textBox.Name = "qty_textBox";
             this.qty_textBox.Size = new System.Drawing.Size(79, 20);
             this.qty_textBox.TabIndex = 3;
@@ -382,14 +412,14 @@
             // 
             // provider_textBox
             // 
-            this.provider_textBox.Location = new System.Drawing.Point(558, 34);
+            this.provider_textBox.Location = new System.Drawing.Point(482, 34);
             this.provider_textBox.Name = "provider_textBox";
-            this.provider_textBox.Size = new System.Drawing.Size(87, 20);
+            this.provider_textBox.Size = new System.Drawing.Size(79, 20);
             this.provider_textBox.TabIndex = 2;
             // 
             // sku_textBox
             // 
-            this.sku_textBox.Location = new System.Drawing.Point(343, 34);
+            this.sku_textBox.Location = new System.Drawing.Point(267, 34);
             this.sku_textBox.Name = "sku_textBox";
             this.sku_textBox.Size = new System.Drawing.Size(190, 20);
             this.sku_textBox.TabIndex = 1;
@@ -398,7 +428,7 @@
             // 
             this.item_textBox.Location = new System.Drawing.Point(49, 34);
             this.item_textBox.Name = "item_textBox";
-            this.item_textBox.Size = new System.Drawing.Size(268, 20);
+            this.item_textBox.Size = new System.Drawing.Size(207, 20);
             this.item_textBox.TabIndex = 0;
             // 
             // save_act_btn
@@ -421,11 +451,29 @@
             this.upload_quote_btn.UseVisualStyleBackColor = true;
             this.upload_quote_btn.Click += new System.EventHandler(this.Upload_quote_btn_Click);
             // 
+            // marketer_textBox
+            // 
+            this.marketer_textBox.Location = new System.Drawing.Point(325, 25);
+            this.marketer_textBox.Name = "marketer_textBox";
+            this.marketer_textBox.Size = new System.Drawing.Size(181, 20);
+            this.marketer_textBox.TabIndex = 11;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(322, 9);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(109, 13);
+            this.label12.TabIndex = 12;
+            this.label12.Text = "Marketer Requesting:";
+            // 
             // NewActivity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1118, 718);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.marketer_textBox);
             this.Controls.Add(this.upload_quote_btn);
             this.Controls.Add(this.save_act_btn);
             this.Controls.Add(this.tabControl1);
@@ -479,18 +527,23 @@
         private System.Windows.Forms.TextBox item_textBox;
         private System.Windows.Forms.Button add_row_btn;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn item_col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sku_col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn provider_col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn qty_col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cog_col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sog_col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn total_col;
         private System.Windows.Forms.Label total_profit_label;
         private System.Windows.Forms.Label total_sale_label;
         private System.Windows.Forms.Label total_label;
         private System.Windows.Forms.Label percent_label;
         private System.Windows.Forms.Button save_act_btn;
         private System.Windows.Forms.Button upload_quote_btn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn item_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sku_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn provider_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Unit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn qty_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cog_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sog_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn total_col;
+        private System.Windows.Forms.TextBox unit_tb;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox marketer_textBox;
+        private System.Windows.Forms.Label label12;
     }
 }

@@ -50,6 +50,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.order_deliver_dtp = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
+            this.order_status_CB = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.delivery_dtp = new System.Windows.Forms.DateTimePicker();
             this.quote_tab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -258,11 +261,44 @@
             this.label6.TabIndex = 40;
             this.label6.Text = "Order Submitted";
             // 
+            // order_status_CB
+            // 
+            this.order_status_CB.FormattingEnabled = true;
+            this.order_status_CB.Items.AddRange(new object[] {
+            "Expected Delivery Date",
+            "Date Delivered",
+            "Not Applicable"});
+            this.order_status_CB.Location = new System.Drawing.Point(1018, 39);
+            this.order_status_CB.Name = "order_status_CB";
+            this.order_status_CB.Size = new System.Drawing.Size(192, 21);
+            this.order_status_CB.TabIndex = 41;
+            this.order_status_CB.SelectedIndexChanged += new System.EventHandler(this.order_status_CB_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(1015, 18);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 13);
+            this.label7.TabIndex = 42;
+            this.label7.Text = "Order Status";
+            // 
+            // delivery_dtp
+            // 
+            this.delivery_dtp.Location = new System.Drawing.Point(1018, 87);
+            this.delivery_dtp.Name = "delivery_dtp";
+            this.delivery_dtp.Size = new System.Drawing.Size(200, 20);
+            this.delivery_dtp.TabIndex = 43;
+            this.delivery_dtp.ValueChanged += new System.EventHandler(this.delivery_dtp_ValueChanged);
+            // 
             // FinishedViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1275, 704);
+            this.Controls.Add(this.delivery_dtp);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.order_status_CB);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.order_deliver_dtp);
             this.Controls.Add(this.label5);
@@ -314,5 +350,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker order_deliver_dtp;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox order_status_CB;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DateTimePicker delivery_dtp;
     }
 }

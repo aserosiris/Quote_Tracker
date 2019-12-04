@@ -38,7 +38,7 @@ namespace Quote_Tracker
                 string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
                 string result = "";
                 label1.Text = "Welcome " + Form1.user_name;
-                string view_query = "SELECT * FROM Activity_overview WHERE Status = 'pending' OR Status = 'Overdue'";
+                string view_query = "SELECT * FROM Activity_overview2 WHERE Draft_Status = 'pending' OR Draft_Status = 'Overdue'";
                 string view_query2 = "SELECT tb_users.fullname, tb_activity.status, tb_activity.title, tb_activity.description FROM tb_activity LEFT JOIN  tb_users ON tb_activity.id_user = tb_users.id WHERE status = 'pending' OR status = 'Overdue'";
                 string actQuery = @"UPDATE tb_activity SET status = 'Overdue' WHERE end_date <= @datecomp and status <>'Finished';";
                 try
@@ -70,11 +70,11 @@ namespace Quote_Tracker
                 {
                     var table = new DataTable();
                     
-                    table.Columns.Add("fullname");
-                    table.Columns.Add("Status");
-                    table.Columns.Add("Client Name");
+                    table.Columns.Add("Created by");
+                    table.Columns.Add("Draft_Status");
+                    table.Columns.Add("Client Type");
                     table.Columns.Add("Title");
-                    table.Columns.Add("Estimated Date of Completion");
+                    table.Columns.Add("Date Requested");
                     table.Columns.Add("Items Quoted");
                     table.Columns.Add("id_activity");
                     table.Columns.Add("id");
@@ -102,7 +102,7 @@ namespace Quote_Tracker
                 string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
                 string result = "";
                 label1.Text = "Welcome " + Form1.user_name;
-                string view_query = "SELECT * FROM Activity_overview WHERE id =" + Form1.user_id + " AND NOT Status = 'Finished'";
+                string view_query = "SELECT * FROM Activity_overview2 WHERE id =" + Form1.user_id + " AND NOT Draft_Status = 'Finished'";
                 string view_query2 = "SELECT status, title, description FROM tb_activity WHERE id_user =" + Form1.user_id + " AND status = 'pending' OR status = 'Overdue'";
                 string actQuery = @"UPDATE tb_activity SET status = 'Overdue' WHERE id_user = @userID AND end_date <= @datecomp and status <>'Finished';";
                 try
@@ -135,13 +135,15 @@ namespace Quote_Tracker
                 using (var adapter = new SqlDataAdapter(view_query, connection))
                 {
                     var table = new DataTable();
+                    table.Columns.Add("Created by");
+                    table.Columns.Add("Draft_Status");
+                    table.Columns.Add("Client Type");
+                    table.Columns.Add("Title");
+                    table.Columns.Add("Date Requested");
+                    table.Columns.Add("Items Quoted");
                     table.Columns.Add("id_activity");
                     table.Columns.Add("id");
-                    table.Columns.Add("Status");
-                    table.Columns.Add("Client Name");
-                    table.Columns.Add("Title");
-                    table.Columns.Add("Estimated Date of Completion");
-                    table.Columns.Add("Items Quoted");
+
 
 
                     adapter.Fill(table);
